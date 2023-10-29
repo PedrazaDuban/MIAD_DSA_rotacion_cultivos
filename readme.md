@@ -4,6 +4,7 @@ Este proyecto es un ejemplo de cómo utilizar MLOps para crear un flujo de traba
 ## Integrantes:
 - Duban Pedraza
 - Lucio Campana
+- Yesid Baez
 
 ## Estructura del Repositorio
 
