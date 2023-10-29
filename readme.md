@@ -1,6 +1,8 @@
 # Proyecto de Machine Learning con MLOps, DVC y MLflow
 
 Este proyecto es un ejemplo de cómo utilizar MLOps para crear un flujo de trabajo de Machine Learning utilizando DVC y MLflow. El objetivo es predecir [tu objetivo, por ejemplo, "ventas de productos"] utilizando [tu conjunto de datos].
+## Integrantes:
+- Duban Pedraza
 
 ## Estructura del Repositorio
 
