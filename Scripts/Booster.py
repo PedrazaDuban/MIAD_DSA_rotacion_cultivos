@@ -28,12 +28,12 @@ from sklearn.metrics import mean_squared_error
 
 
 # registre el experimento
-experiment = mlflow.set_experiment("sklearn-diab")
+experiment = mlflow.set_experiment("Booster")
 #nombre incremental
 time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 #nombre incremental
 
-run_name=f"sklearn-diab-{time}"
+run_name=f"Booster-{time}"
 # Aquí se ejecuta MLflow sin especificar un nombre o id del experimento. MLflow los crea un experimento para este cuaderno por defecto y guarda las características del experimento y las métricas definidas. 
 # Para ver el resultado de las corridas haga click en Experimentos en el menú izquierdo. 
 with mlflow.start_run(run_name=run_name):

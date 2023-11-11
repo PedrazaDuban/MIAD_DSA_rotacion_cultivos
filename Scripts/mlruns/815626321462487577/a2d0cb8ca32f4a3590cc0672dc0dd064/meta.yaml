@@ -1,8 +1,9 @@
 artifact_uri: file:///E:/MIAD/III%20Semestre/Ciclo%20II/Despliegue%20de%20Soluciones%20Analiticas/Proyecto/MIAD_DSA_rotacion_cultivos/Scripts/mlruns/815626321462487577/a2d0cb8ca32f4a3590cc0672dc0dd064/artifacts
+deleted_time: 1699735018114
 end_time: 1699718150247
 entry_point_name: ''
 experiment_id: '815626321462487577'
-lifecycle_stage: active
+lifecycle_stage: deleted
 run_id: a2d0cb8ca32f4a3590cc0672dc0dd064
 run_name: capable-steed-899
 run_uuid: a2d0cb8ca32f4a3590cc0672dc0dd064

@@ -1,0 +1,15 @@
+artifact_uri: file:///E:/MIAD/III%20Semestre/Ciclo%20II/Despliegue%20de%20Soluciones%20Analiticas/Proyecto/MIAD_DSA_rotacion_cultivos/Scripts/mlruns/815626321462487577/36202f9e8e28478daf3e8b0cbca4892b/artifacts
+end_time: 1699735000425
+entry_point_name: ''
+experiment_id: '815626321462487577'
+lifecycle_stage: active
+run_id: 36202f9e8e28478daf3e8b0cbca4892b
+run_name: sklearn-diab-2023-11-11 15:36:33
+run_uuid: 36202f9e8e28478daf3e8b0cbca4892b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1699734994366
+status: 3
+tags: []
+user_id: DubanPedraza
