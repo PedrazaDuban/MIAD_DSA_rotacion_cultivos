@@ -31,8 +31,8 @@ experiment = mlflow.set_experiment("sklearn-diab")
 # Para ver el resultado de las corridas haga click en Experimentos en el menú izquierdo. 
 with mlflow.start_run(experiment_id=experiment.experiment_id):
     # defina los parámetros del modelo
-    n_estimators = 200 
-    max_depth = 6
+    n_estimators = 300
+    max_depth = 5
     max_features = 4
     # Cree el modelo con los parámetros definidos y entrénelo
     rf = RandomForestRegressor(n_estimators = n_estimators, max_depth = max_depth, max_features = max_features)
