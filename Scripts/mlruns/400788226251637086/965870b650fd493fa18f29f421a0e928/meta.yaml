@@ -1,0 +1,15 @@
+artifact_uri: file:///E:/MIAD/III%20Semestre/Ciclo%20II/Despliegue%20de%20Soluciones%20Analiticas/Proyecto/MIAD_DSA_rotacion_cultivos/Scripts/mlruns/400788226251637086/965870b650fd493fa18f29f421a0e928/artifacts
+end_time: 1699738220385
+entry_point_name: ''
+experiment_id: '400788226251637086'
+lifecycle_stage: active
+run_id: 965870b650fd493fa18f29f421a0e928
+run_name: Booster-2023-11-11 21:30:17
+run_uuid: 965870b650fd493fa18f29f421a0e928
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1699738217752
+status: 4
+tags: []
+user_id: codespace
