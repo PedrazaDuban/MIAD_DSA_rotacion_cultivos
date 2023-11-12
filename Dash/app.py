@@ -110,7 +110,7 @@ html.Div([
 ], className="card"),
 
 html.Div([
-    html.Div("Ärea Cosechada", className="card-title"),
+    html.Div("Área Cosechada", className="card-title"),
     html.Div(f"{CantidadCultivos}", className="card-valor"),
 ], className="card"),# Contenedor cards
 # Contenedor de la tabla
