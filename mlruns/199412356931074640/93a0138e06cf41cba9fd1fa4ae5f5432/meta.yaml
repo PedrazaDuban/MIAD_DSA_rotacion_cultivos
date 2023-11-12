@@ -1,0 +1,15 @@
+artifact_uri: file:///workspaces/MIAD_DSA_rotacion_cultivos/mlruns/199412356931074640/93a0138e06cf41cba9fd1fa4ae5f5432/artifacts
+end_time: 1699815977376
+entry_point_name: ''
+experiment_id: '199412356931074640'
+lifecycle_stage: active
+run_id: 93a0138e06cf41cba9fd1fa4ae5f5432
+run_name: Polynomial-2023-11-12 19:06:13
+run_uuid: 93a0138e06cf41cba9fd1fa4ae5f5432
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1699815973695
+status: 3
+tags: []
+user_id: codespace

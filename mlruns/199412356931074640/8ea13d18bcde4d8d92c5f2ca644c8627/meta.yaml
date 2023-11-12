@@ -1,8 +1,9 @@
 artifact_uri: file:///workspaces/MIAD_DSA_rotacion_cultivos/mlruns/199412356931074640/8ea13d18bcde4d8d92c5f2ca644c8627/artifacts
+deleted_time: 1699816074207
 end_time: 1699805726930
 entry_point_name: ''
 experiment_id: '199412356931074640'
-lifecycle_stage: active
+lifecycle_stage: deleted
 run_id: 8ea13d18bcde4d8d92c5f2ca644c8627
 run_name: Polynomial-2023-11-12 16:15:20
 run_uuid: 8ea13d18bcde4d8d92c5f2ca644c8627

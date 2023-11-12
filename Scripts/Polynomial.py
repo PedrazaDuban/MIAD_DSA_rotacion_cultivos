@@ -106,7 +106,7 @@ run_name = f"Polynomial-{time}"
 with mlflow.start_run(run_name=run_name):
     # Define Parametros
     # Crear características polinómicas
-    degree = 5    
+    degree = 10
     poly = PolynomialFeatures(degree=degree)
     X_train_poly = poly.fit_transform(X_train)
     X_test_poly = poly.fit_transform(X_test)
