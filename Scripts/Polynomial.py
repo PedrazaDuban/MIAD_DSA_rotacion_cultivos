@@ -72,9 +72,10 @@ evaluaciones3 = pd.merge(evaluaciones, municipios3[['CÓD. MUN.', 'k10cls']], on
 evaluaciones3 = evaluaciones3.dropna(subset='Rendimiento\n(t/ha)')
 evaluaciones3 = evaluaciones3.dropna(subset='AÑO')
 evaluaciones3 = evaluaciones3.dropna(subset='CULTIVO')
+evaluaciones3 = evaluaciones3.dropna(subset='k10cls')
 
 # Seleccionar columnas de interés
-columnas = ['GRUPO \nDE CULTIVO', 'AÑO', 'MUNICIPIO', 'Rendimiento\n(t/ha)']
+columnas = ['CULTIVO', 'AÑO', 'k10cls', 'Rendimiento\n(t/ha)']
 df = evaluaciones3[columnas]
 
 # Eliminar filas con valores nulos en la columna 'Rendimiento\n(t/ha)'
@@ -82,11 +83,11 @@ df.dropna(subset=['Rendimiento\n(t/ha)'], inplace=True)
 
 # Codificar variables categóricas
 le = LabelEncoder()
-df['GRUPO \nDE CULTIVO'] = le.fit_transform(df['GRUPO \nDE CULTIVO'])
-df['MUNICIPIO'] = le.fit_transform(df['MUNICIPIO'])
+df['CULTIVO'] = le.fit_transform(df['CULTIVO'])
+# df['MUNICIPIO'] = le.fit_transform(df['MUNICIPIO'])
 
 # Definir variables X y Y
-X = ['GRUPO \nDE CULTIVO', 'AÑO', 'MUNICIPIO']
+X = ['CULTIVO', 'AÑO', 'k10cls']
 Y = 'Rendimiento\n(t/ha)'
 X = df[X]
 Y = df[Y]
