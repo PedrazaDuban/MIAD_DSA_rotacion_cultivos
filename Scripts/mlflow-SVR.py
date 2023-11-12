@@ -72,15 +72,15 @@ run_name=f"sklearn-SVR-{time}"
 # Para ver el resultado de las corridas haga click en Experimentos en el menú izquierdo. 
 with mlflow.start_run(run_name=run_name):
     # Definir los parámetros para el SVR
-    C = 1.0             # Regularizacion del modelo
-    kernel = 'rbf'     # Funcion Kernel
+    C = 10              # Regularizacion del modelo
+    kernel = 'rbf'      # Funcion Kernel
     gamma = 'auto'      # Influencia que tiene un solo ejemplo de entrenamiento
     epsilon = 0.1       # Magnitud permitida del margen del modelo
     shrinking = True    # Heuristica de reduccion de vectores
     tol = 0.01          # Criterio de tolerancia para la convergencia del algoritmo
     cache_size = 200    # Memoria cache usada por el kernel
     max_iter = 5000     # Numero maximo de iteraciones permitidas para la convergencia del algoritmo
-    verbose = True       # Imprime mensajes detallados durante el entrenamiento
+    verbose = True      # Imprime mensajes detallados durante el entrenamiento
     
     # Crear el modelo de Support Vector Regressor
     svr = SVR(C = C, kernel = kernel, gamma = gamma, epsilon = epsilon, shrinking = shrinking,tol = tol, cache_size = cache_size, max_iter = max_iter, verbose = verbose)
