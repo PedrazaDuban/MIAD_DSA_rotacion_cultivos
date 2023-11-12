@@ -20,7 +20,13 @@ X_train, X_test, y_train, y_test = train_test_split(X, y)
 import mlflow
 import mlflow.sklearn
 import datetime
-from sklearn.ensemble import RandomForestRegressor
+import pandas as pd
+import numpy as np
+import geopandas as gpd
+from sklearn.preprocessing import robust_scale
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import LabelEncoder
+from sklearn import datasets, ensemble
 from sklearn.metrics import mean_squared_error
 
 # defina el servidor para llevar el registro de modelos y artefactos
