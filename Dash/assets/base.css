@@ -125,6 +125,8 @@
 html is set to 62.5% so that all the REM measurements throughout Skeleton
 are based on 10px sizing. So basically 1.5rem = 15px :) */
 .header {
+  margin: 0.5% ;
+  padding: 0.5%;
   display: flex;
   align-items: center;
 }
@@ -415,46 +417,89 @@ hr {
 }
 
 #enviar-button {
+  display: block;
   background-color: #252e3f; /* Color de fondo */
   color: white; /* Color del texto */
   border-radius: 10px; /* Bordes redondeados */
   margin-top: 20px;
-  padding: 10px 20px; /* Relleno interno */
+  padding: 0px 10px; /* Relleno interno */
+  text-size-adjust: 50%;
   text-align: center top; /* Centrar el texto */
+  width: 100%;
 }
 /* Contenedor principal */
 .main-container {
+  margin: 30px;
   display: flex;
   justify-content: flex-start; /* Cambiamos 'space-between' a 'flex-start' */
   align-items: flex-start;
 }
 
+.model_graph {
+  border: 1px solid #575656;
+  border-radius: 10px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  background-color: #a5a0a0;
+  width: 100%;  
+  text-align: center;
+}
 /* left-container */
-left-container {
+.left-container {
   background-color: #252e3f;
-  margin-top: 20px;
+  margin-top: 35px;
   padding: 0rem 2rem;
   min-height: calc(100vh - 5.5rem);
+  width: 25%;
 }
 
+
 /* right-container */
-right-container {
+.right-container {
   margin-top: 20px;
   margin-left: 50px; /* Agregamos un espacio de 50px a la izquierda */
   background-color: #252e3f;
   padding: 0rem 2rem;
-  min-height: calc(100vh - 5.5rem);
+  /*min-height: calc(100vh - 5.5rem);*/
 }
+
+.cards-container {
+  margin: 1%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+  width: 50%;
+}
+
 .card {
   border: 1px solid #575656;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin: 10px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
   background-color: #a5a0a0;
-  width: calc(20% - 20px); /* Ancho del 20% con margen */
-  min-width: 200px; /* Ancho mínimo para evitar que se vuelvan demasiado estrechas */
+  text-align: center;
 }
+
+.card-title {
+  font-weight: bold;
+  text-align: center;
+}
+
+.table-container {
+  grid-column: span 3; /* Hacer que la tabla ocupe tres columnas */
+}
+
+.table {
+  border-collapse: collapse;
+  border: 1px solid #575656;
+  border-radius: 10px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  background-color: #a5a0a0;
+  text-align: center;
+  width: 100%; /* Ancho de la tabla */
+}
+
 
 
 

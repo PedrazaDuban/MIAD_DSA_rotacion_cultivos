@@ -1,5 +1,6 @@
 import dash
 from dash import dcc, html
+from dash import dash_table
 from dash.dependencies import Input, Output
 import plotly.graph_objs as go
 import numpy as np
@@ -16,6 +17,14 @@ años = Inputs['AÑO'].unique().tolist()
 departamentos = Inputs['DEPARTAMENTO'].unique().tolist()
 cultivos = Inputs['CULTIVO'].unique().tolist()
 
+# Datos de ejemplo
+data = {
+    'Nombre': ['Juan', 'Ana', 'Luis', 'María'],
+    'Edad': [25, 30, 35, 28],
+    'Ciudad': ['Madrid', 'Barcelona', 'Sevilla', 'Valencia']
+}
+df = pd.DataFrame(data)
+
 with open('img/Logo.png', 'rb') as f:
     logo_data = f.read()
 encoded_logo = base64.b64encode(logo_data).decode()
@@ -26,7 +35,7 @@ app.layout = html.Div([
         html.H1("Rendimiento Agrícola por Hectárea"),
     ], className="header"),
 
-    html.Div([
+     html.Div([
         html.Div([
             html.H6("Departamento"),
             dcc.Dropdown(
@@ -73,34 +82,33 @@ app.layout = html.Div([
 
         ], className="left-container"),  # Contenedor izquierdo
 
+
+    html.Div([
         html.Div([
-            html.Div([
-                html.Div("Card 1", className="card-title"),
-                dcc.Graph(id="grafica-1"),
-            ], className="card"),
-            html.Div([
-                html.Div("Card 2", className="card-title"),
-                dcc.Graph(id="grafica-2"),
-            ], className="card"),
-            html.Div([
-                html.Div("Card 3", className="card-title"),
-                dcc.Graph(id="grafica-3"),
-            ], className="card"),
-            html.Div([
-                html.Div("Card 4", className="card-title"),
-                dcc.Graph(id="grafica-4"),
-            ], className="card"),
-            html.Div([
-                html.Div("Card 5", className="card-title"),
-                dcc.Graph(id="grafica-5"),
-            ], className="card"),
-           
-            dcc.Graph(
-                id="line-chart",
-            ),
-        ], className="right-container"),  # Contenedor derecho
-    ], className="main-container"),
+            html.Div("Card 1", className="card-title"),
+            # Contenido de la Card 1
+        ], className="card"),
+        html.Div([
+            html.Div("Card 2", className="card-title"),
+            # Contenido de la Card 2
+        ], className="card"),
+        html.Div([
+            html.Div("Card 3", className="card-title"),
+            # Contenido de la Card 3
+        ], className="card"),
+        html.Div([
+            dash_table.DataTable(df.to_dict('records'), [{"name": i, "id": i} for i in df.columns])
+            # Contenido de la Card 6
+        ], className="table-container"),  # Contenedor de la tabla
+    ], className="cards-container"),  # Contenedor derecho
+    
+    html.Div([
+            dcc.Graph(id="line-chart", className="line-chart"),
+        ], className="model_graph"),
+    ], className="main-container")
 ])
+
+
 
 @app.callback(
     Output("dropdown-municipio", "options"),
@@ -138,6 +146,7 @@ def update_line_chart(grupo_cultivo, año, municipio, departamento, cultivo):
     fig = go.Figure(data=go.Scatter(x=x_values, y=y_values, mode='lines'))
 
     return fig
+
 
 if __name__ == '__main__':
     app.run_server(debug=True)
