@@ -78,7 +78,7 @@ with mlflow.start_run(run_name=run_name):
     epsilon = 0.5       # Magnitud permitida del margen del modelo
     shrinking = True    # Heuristica de reduccion de vectores
     tol = 0.1          # Criterio de tolerancia para la convergencia del algoritmo
-    cache_size = 200    # Memoria cache usada por el kernel
+    cache_size = 500    # Memoria cache usada por el kernel
     max_iter = 6000     # Numero maximo de iteraciones permitidas para la convergencia del algoritmo
     verbose = True      # Imprime mensajes detallados durante el entrenamiento
     
