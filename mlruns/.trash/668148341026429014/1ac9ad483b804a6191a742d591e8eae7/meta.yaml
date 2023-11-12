@@ -1,0 +1,16 @@
+artifact_uri: file:///C:/Users/alexy/OneDrive/Documentos/Alex/Uniandes/CICLO%206/Despliegue%20de%20soluciones%20analiticas/Semana%203/MIAD_DSA_rotacion_cultivos/mlruns/668148341026429014/1ac9ad483b804a6191a742d591e8eae7/artifacts
+deleted_time: 1699806581776
+end_time: 1699806468324
+entry_point_name: ''
+experiment_id: '668148341026429014'
+lifecycle_stage: deleted
+run_id: 1ac9ad483b804a6191a742d591e8eae7
+run_name: sklearn-SVR-2023-11-12 11:25:49
+run_uuid: 1ac9ad483b804a6191a742d591e8eae7
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1699806349749
+status: 3
+tags: []
+user_id: alexy

@@ -15,7 +15,7 @@ from sklearn.preprocessing import robust_scale
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import LabelEncoder
 
-with open('data/Evaluaciones_Agropecuarias_Municipales_EVA.csv', 'r', encoding='utf-8') as file:
+with open('..\data\Evaluaciones_Agropecuarias_Municipales_EVA.csv', 'r', encoding='utf-8') as file:
     evaluaciones = pd.read_csv(file)
 evaluaciones2=evaluaciones[['CÓD. MUN.', 'CULTIVO']]
 pivot = np.round(pd.pivot_table(evaluaciones2, index='CÓD. MUN.',
@@ -23,7 +23,7 @@ pivot = np.round(pd.pivot_table(evaluaciones2, index='CÓD. MUN.',
 pivot.reset_index(inplace=True)
 pivot['DPTOMPIO']=pivot['CÓD. MUN.']
 
-municipios=gpd.read_file('data\MunicipiosVeredas19MB.json')
+municipios=gpd.read_file('..\data\MunicipiosVeredas19MB.json')
 municipios['DPTOMPIO']=municipios[['DPTOMPIO']].apply(pd.to_numeric)
 municipios2=municipios[['DPTOMPIO','geometry']]
 pivot = pivot.astype({'CÓD. MUN.':'int'})
@@ -54,7 +54,6 @@ X[categorical_cols] = X[categorical_cols].apply(lambda col: le.fit_transform(col
 X_train, X_test, y_train, y_test = train_test_split(
     X, Y, test_size=0.25, random_state=13
 )
-
 
 #Importe MLFlow para registrar los experimentos, el regresor de bosques aleatorios y la métrica de error cuadrático medio
 import mlflow

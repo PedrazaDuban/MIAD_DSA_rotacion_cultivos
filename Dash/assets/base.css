@@ -537,6 +537,10 @@ hr {
   text-align: center;
  
 }
+/* Estilo para el gráfico */
+.mapa-graph {
+  background-color: transparent; /* Fondo transparente */
+}
 
 .line-chart-container {
   grid-column: span 3; /* Hacer que la tabla ocupe tres columnas */

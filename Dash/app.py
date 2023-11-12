@@ -19,16 +19,15 @@ años = Inputs['AÑO'].unique().tolist()
 departamentos = Inputs['DEPARTAMENTO'].unique().tolist()
 cultivos = Inputs['CULTIVO'].unique().tolist()
 
+CantidadCultivos = len(Inputs['CULTIVO'].unique())
 
-total_departamentos = len(Inputs['DEPARTAMENTO'].unique())
+#AreaSembrada = Inputs["Área Sembrada(ha)"].sum()
+#AreaCosechada = Inputs["Área Cosechada(ha)"].sum()
+
 # Datos de ejemplo
-data = {
-    'Nombre': ['Juan', 'Ana', 'Luis', 'María', 'Pedro'],
-    'Edad': [25, 30, 35, 28, 42],
-    'Ciudad': ['Madrid', 'Barcelona', 'Sevilla', 'Valencia', 'Zaragoza']
-}
-df = pd.DataFrame(data)
 
+df = pd.DataFrame(Inputs, columns=[ 'DEPARTAMENTO', 'MUNICIPIO','GRUPO \nDE CULTIVO', 'CULTIVO', 'RENDIMIENTO_TONELADAS_HA']).head(10)
+                                                                                                                
 with open('img/Logo.png', 'rb') as f:
     logo_data = f.read()
 encoded_logo = base64.b64encode(logo_data).decode()
@@ -94,40 +93,48 @@ html.Div([
 # Contenedor cards            
 
 html.Div([             
-# Contenedor cards
-html.Div([                  
-    html.Div("Card 1", className="card-title"),
-    html.Div(id="card-Valor"),
-], className="card"),           
+    # Contenedor cards
+    html.Div([                  
+        html.Div("Cantidad de Cultivos", className="card-title"),
+        html.Div(f"{CantidadCultivos}", className="card-valor", 
+                 style={'backgroundColor': 'rgba(0,0,0,0)', 'color': '#2cfec1', 'textAlign': 'center','fontSize': '30px'}
+                 ),
+    ], className="card"),           
 
+    html.Div([
+        html.Div("Área Sembrada", className="card-titdle"),
+        html.Div(f"{CantidadCultivos}", className="card-valor", 
+                 style={'backgroundColor': 'rgba(0,0,0,0)', 'color': '#2cfec1', 'textAlign': 'center','fontSize': '30px'}
+                 ),
+    ], className="card"),
 
-html.Div([
-html.Div("Card 2", className="card-titdle"),
-# Contenido de la Card 2
-], className="card"),
-html.Div([
-html.Div("Card 3", className="card-title"),
-# Contenido de la Card 3
-], className="card"),# Contenedor cards
-# Contenedor de la tabla
-html.Div([
-html.H4('Tabla de Recomendaciones', className="title-visualizacion"),
-dash_table.DataTable(df.to_dict('records'), [{"name": i, "id": i} for i in df.columns]), 
-], className="table-container"),  # Contenedor de la tabla
+    html.Div([
+        html.Div("Área Cosechada", className="card-title"),
+        html.Div(f"{CantidadCultivos}", className="card-valor", 
+                 style={'backgroundColor': 'rgba(0,0,0,0)', 'color': '#2cfec1', 'textAlign': 'center','fontSize': '30px'}
+                 ),
+    ], className="card"),# Contenedor cards
+    # Contenedor de la tabla
+    html.Div([
+        html.H4('Tabla de Recomendaciones', className="title-visualizacion"),
+        dash_table.DataTable(df.to_dict('records'), [{"name": i, "id": i} for i in df.columns],
+                             style_cell={'backgroundColor': 'rgba(0,0,0,0)', 'color': '#2cfec1','textAlign': 'center'},
+                             ), 
+    ], className="table-container"),  # Contenedor de la tabla
 ], className="cards-container"), # Contenedor de las cards y la tabla
-
 
 # Contenedor de la visualización del mapa
 html.Div([
-html.H4('Grupo de Cultivos con Municipicos Similares', className="title-visualizacion"),
-dcc.RadioItems(
-id='candidate',
-options=["Joly", "Coderre", "Bergeron"],
-value="Coderre",
-inline=True
-),
-dcc.Graph(id="mapa", className="mapa-graph"), 
-
+    html.H4('Grupo de Cultivos con Municipicos Similares', className="title-visualizacion"),
+    dcc.RadioItems(
+            id='candidate',
+            options=["Joly", "Coderre", "Bergeron"],
+            value="Coderre",
+            inline=True
+        ),
+    dcc.Graph(id="mapa", className="mapa-graph",
+              style={'backgroundColor': 'rgba(0,0,0,0)'}
+              ), 
 ],className="mapa-container"),
 # Contenedor de la tabla
 
@@ -164,13 +171,7 @@ def update_municipios(departamento):
 
 #Llamado a la base de card 1
 
-@app.callback(
-    Output("card-Valor", "children"),
-    Input("trigger-button", "n_clicks"),  # Un botón que dispara la actualización
-)
-def update_card(total_departamentos):
-    # Supongamos que tienes una variable total_departamentos previamente calculada
-    return f"Total de Departamentos: {total_departamentos}"
+#llamado a la base de tabla
 
 
 ##mapa #https://plotly.com/python/maps/
@@ -220,7 +221,7 @@ def update_line_chart(grupo_cultivo, año, municipio, departamento, cultivo):
     #x_values = filtered_data['FECHA']  # Reemplaza 'FECHA' con tu columna de fechas
     #y_values = filtered_data['RENDIMIENTO_TONELADAS_HA']  # Reemplaza con tus rendimientos
 
-    fig = go.Figure(data=go.Scatter(x=x_values, y=y_values, mode='lines'))
+    fig = go.Figure(data=go.Scatter(x=x_values, y=y_values, mode='lines', marker_color='#2cfec1'))
     #fig = px.line(data2, x='local_timestamp', y="Demanda total [MW]", markers=True, labels={"local_timestamp": "Fecha"})
     fig.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font_color="#2cfec1")
     fig.update_xaxes(showgrid=True, gridwidth=0.25, gridcolor='#7C7C7C')

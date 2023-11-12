@@ -1,23 +1,28 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Nov 11  2023
+ 
+@author: Equipo DSA
+"""
+ 
 # Importe el conjunto de datos de diabetes y divídalo en entrenamiento y prueba usando scikit-learn
+from sklearn.model_selection import train_test_split
 import pandas as pd
 import numpy as np
 import geopandas as gpd
-import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import robust_scale
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import LabelEncoder
-
-
-with open('data/Evaluaciones_Agropecuarias_Municipales_EVA.csv', 'r', encoding='utf-8') as file:
+ 
+with open('../data/Evaluaciones_Agropecuarias_Municipales_EVA.csv', 'r', encoding='utf-8') as file:
     evaluaciones = pd.read_csv(file)
 evaluaciones2=evaluaciones[['CÓD. MUN.', 'CULTIVO']]
 pivot = np.round(pd.pivot_table(evaluaciones2, index='CÓD. MUN.',
                                 columns='CULTIVO', aggfunc= len, fill_value=0))
 pivot.reset_index(inplace=True)
 pivot['DPTOMPIO']=pivot['CÓD. MUN.']
-
-municipios=gpd.read_file('data\MunicipiosVeredas19MB.json')
+municipios=gpd.read_file("../data/MunicipiosVeredas19MB.json")
 municipios['DPTOMPIO']=municipios[['DPTOMPIO']].apply(pd.to_numeric)
 municipios2=municipios[['DPTOMPIO','geometry']]
 pivot = pivot.astype({'CÓD. MUN.':'int'})
@@ -49,61 +54,57 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, Y, test_size=0.25, random_state=13
 )
 
-
+print(X_train) 
+'''
 #Importe MLFlow para registrar los experimentos, el regresor de bosques aleatorios y la métrica de error cuadrático medio
 import mlflow
 import mlflow.sklearn
 import datetime
-from sklearn.svm import SVR
+from sklearn.preprocessing import robust_scale
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import LabelEncoder
+from sklearn import datasets, ensemble
 from sklearn.metrics import mean_squared_error
-
+ 
 # defina el servidor para llevar el registro de modelos y artefactos
 #mlflow.set_tracking_uri('http://localhost:5000')
-
-
+ 
+ 
 # registre el experimento
-experiment = mlflow.set_experiment("SVR")
+experiment = mlflow.set_experiment("Booster")
 #nombre incremental
 time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 #nombre incremental
-
-run_name=f"sklearn-SVR-{time}"
-# Aquí se ejecuta MLflow sin especificar un nombre o id del experimento. MLflow los crea un experimento para este cuaderno por defecto y guarda las características del experimento y las métricas definidas. 
-# Para ver el resultado de las corridas haga click en Experimentos en el menú izquierdo. 
+ 
+run_name=f"Booster-{time}"
+# Aquí se ejecuta MLflow sin especificar un nombre o id del experimento. MLflow los crea un experimento para este cuaderno por defecto y guarda las características del experimento y las métricas definidas.
+# Para ver el resultado de las corridas haga click en Experimentos en el menú izquierdo.
 with mlflow.start_run(run_name=run_name):
-    # Definir los parámetros para el SVR
-    C = 1.0             # Regularizacion del modelo
-    kernel = 'rbf'     # Funcion Kernel
-    gamma = 'auto'      # Influencia que tiene un solo ejemplo de entrenamiento
-    epsilon = 0.1       # Magnitud permitida del margen del modelo
-    shrinking = True    # Heuristica de reduccion de vectores
-    tol = 0.01          # Criterio de tolerancia para la convergencia del algoritmo
-    cache_size = 200    # Memoria cache usada por el kernel
-    max_iter = 5000     # Numero maximo de iteraciones permitidas para la convergencia del algoritmo
-    verbose = True       # Imprime mensajes detallados durante el entrenamiento
-    
-    # Crear el modelo de Support Vector Regressor
-    svr = SVR(C = C, kernel = kernel, gamma = gamma, epsilon = epsilon, shrinking = shrinking,tol = tol, cache_size = cache_size, max_iter = max_iter, verbose = verbose)
-    # Entrenar el modelo
-    svr.fit(X_train, y_train)
+    # defina los parámetros del modelo
+   
+    n_estimators = 500
+    max_depth = 4
+    min_samples_split = 5
+    learning_rate = 0.01
+    loss = 'squared_error'
+    # Cree el modelo con los parámetros definidos y entrénelo
+    reg = ensemble.GradientBoostingRegressor(n_estimators = n_estimators, max_depth=max_depth, min_samples_split=min_samples_split, learning_rate=learning_rate,loss=loss)
+    reg.fit(X_train, y_train)
     # Realice predicciones de prueba
-    predictions = svr.predict(X_test)
-  
+    predictions = reg.predict(X_test)
+ 
     # Registre los parámetros
-    mlflow.log_param("C", C)
-    mlflow.log_param("kernel", kernel)
-    mlflow.log_param("gamma", gamma)
-    mlflow.log_param("epsilon", epsilon)
-    mlflow.log_param("shrinking", shrinking)
-    mlflow.log_param("tol", tol)
-    mlflow.log_param("cache_size", cache_size)
-    mlflow.log_param("max_iter", max_iter)
-    mlflow.log_param("verbose", verbose)
-  
+    mlflow.log_param("num_estimators", n_estimators)
+    mlflow.log_param("maxdepth", max_depth)
+    mlflow.log_param("min_samples_split", min_samples_split)
+    mlflow.log_param("learning_rate", learning_rate)
+    mlflow.log_param("loss", loss)
+ 
     # Registre el modelo
-    mlflow.sklearn.log_model(svr, "support-vector-regressor")
-  
+    mlflow.sklearn.log_model(reg, "gradien-boosting-regressor")
+ 
     # Cree y registre la métrica de interés
     mse = mean_squared_error(y_test, predictions)
     mlflow.log_metric("mse", mse)
     print(mse)
+    '''
