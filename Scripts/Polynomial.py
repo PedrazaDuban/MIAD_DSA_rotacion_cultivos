@@ -120,7 +120,7 @@ with mlflow.start_run(run_name=run_name):
 
     # Registrar los Parámetros
     mlflow.log_param("Degree_Polynomial", degree)
-    mlflow.log_param("clusters", 10)
+    # mlflow.log_param("clusters", 10)
 
     # Registrar el Modélo
     mlflow.sklearn.log_model(modelo, "Polynomial")
