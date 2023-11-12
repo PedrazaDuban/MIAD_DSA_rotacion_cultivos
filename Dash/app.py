@@ -1,6 +1,5 @@
 import dash
-from dash import dcc, html
-from dash import dash_table
+from dash import dcc, html,dash_table
 from dash.dependencies import Input, Output
 import plotly.graph_objs as go
 import numpy as np
