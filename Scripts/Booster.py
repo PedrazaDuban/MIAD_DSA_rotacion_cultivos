@@ -77,13 +77,7 @@ run_name=f"Booster-{time}"
 # Para ver el resultado de las corridas haga click en Experimentos en el menú izquierdo. 
 with mlflow.start_run(run_name=run_name):
     # defina los parámetros del modelo
-    params = {
-    "n_estimators": 500,
-    "max_depth": 4,
-    "min_samples_split": 5,
-    "learning_rate": 0.01,
-    "loss": "squared_error",
-}
+    
     n_estimators = 500 
     max_depth = 4
     min_samples_split = 5

@@ -11,6 +11,9 @@ from sklearn.model_selection import train_test_split
 import pandas as pd
 import numpy as np
 import geopandas as gpd
+from sklearn.preprocessing import robust_scale
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import LabelEncoder
 
 evaluaciones = pd.read_csv('../data/Evaluaciones_Agropecuarias_Municipales_EVA.csv')
 evaluaciones2=evaluaciones[['CÓD. MUN.', 'CULTIVO']]
