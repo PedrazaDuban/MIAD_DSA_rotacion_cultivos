@@ -15,27 +15,27 @@ from sklearn.preprocessing import robust_scale
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import LabelEncoder
 
-with open('C:\Users\luc23\OneDrive\Escritorio\proyecto DAS\MIAD_DSA_rotacion_cultivos\data\Evaluaciones_Agropecuarias_Municipales_EVA.csv') as file:
-    evaluaciones = pd.read_csv(file)
-evaluaciones2=evaluaciones[['COD. MUN.', 'CULTIVO']]
-pivot = np.round(pd.pivot_table(evaluaciones2, index='COD. MUN.',
+evaluaciones = pd.read_csv('../data/Evaluaciones_Agropecuarias_Municipales_EVA.csv')
+evaluaciones2=evaluaciones[['CÓD. MUN.', 'CULTIVO']]
+pivot = np.round(pd.pivot_table(evaluaciones2, index='CÓD. MUN.',
                                 columns='CULTIVO', aggfunc= len, fill_value=0))
 pivot.reset_index(inplace=True)
-pivot['DPTOMPIO']=pivot['COD. MUN.']
-municipios=gpd.read_file("C:\Users\luc23\OneDrive\Escritorio\proyecto DAS\MIAD_DSA_rotacion_cultivos\data\MunicipiosVeredas19MB.json")
+pivot['DPTOMPIO']=pivot['CÓD. MUN.']
+
+municipios=gpd.read_file('../data/MunicipiosVeredas19MB.json')
 municipios['DPTOMPIO']=municipios[['DPTOMPIO']].apply(pd.to_numeric)
 municipios2=municipios[['DPTOMPIO','geometry']]
-pivot = pivot.astype({'COD. MUN.':'int'})
+pivot = pivot.astype({'CÓD. MUN.':'int'})
 municipios3=pd.merge(municipios2,pivot, left_on='DPTOMPIO', right_on='DPTOMPIO')
 municipios3 = municipios3.iloc[: , 1:]
-db_scaled = robust_scale(municipios3.loc[:, ~municipios3.columns.isin(['geometry', 'COD. MUN.'])])
+db_scaled = robust_scale(municipios3.loc[:, ~municipios3.columns.isin(['geometry', 'CÓD. MUN.'])])
 kmeans = KMeans(n_clusters=10)
 # Set the seed for reproducibility
 np.random.seed(1234)
 # Run K-Means algorithm
 k10cls = kmeans.fit(db_scaled)
 municipios3["k10cls"] = k10cls.labels_
-evaluaciones3 = pd.merge(evaluaciones,municipios3[['COD. MUN.','k10cls']],on='COD. MUN.', how='left')
+evaluaciones3 = pd.merge(evaluaciones,municipios3[['CÓD. MUN.','k10cls']],on='CÓD. MUN.', how='left')
 evaluaciones3=evaluaciones3.dropna(subset='Rendimiento\n(t/ha)')
 evaluaciones3['Rendimiento\n(t/ha)'] = evaluaciones3[evaluaciones3['Rendimiento\n(t/ha)'] < 25]['Rendimiento\n(t/ha)']
 evaluaciones3=evaluaciones3.dropna(subset='Rendimiento\n(t/ha)')

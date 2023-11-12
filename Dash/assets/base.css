@@ -38,7 +38,7 @@
   position: relative;
   width: 100%;
   max-width: 960px;
-  margin: 0 auto;
+  margin: 0 0; 
   padding: 0 20px;
   box-sizing: border-box; }
 .column,
@@ -430,12 +430,127 @@ hr {
 /* Contenedor principal */
 .main-container {
   margin: 30px;
+  padding-top: 2%;
   display: flex;
   justify-content: flex-start; /* Cambiamos 'space-between' a 'flex-start' */
   align-items: flex-start;
+  background-color: #465470;
+  padding: 1rem 1rem;
+  border-radius:5px ;
+}
+/* left-container */
+.left-container {
+  background-color: #252e3f;
+  margin-top: 0px;
+  padding: 2rem 2rem;
+  border-radius: 10px;
+  min-height: calc(100vh - 5.5rem);
+  width: 12%;
+  height: 100%;
 }
 
-.model_graph {
+
+/* right-container */
+.right-container {
+  margin-top: 20px;
+  margin-left: 50px; /* Agregamos un espacio de 50px a la izquierda */
+  background-color: #3f252f;
+  padding: 1rem 1rem;
+  min-height: calc(100vh - 5.5rem);
+  width: 75%;
+}
+
+.card {
+  padding-top: 10px;
+  border: 1px solid #575656;
+  border-radius: 10px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  background-color: #252e3f;
+  text-align: center;
+  height: 50%;
+  opacity: 0.8;
+}
+
+.card-title {
+  font-weight: bold;
+  text-align: center;
+}
+.cards-container {
+  margin: 0%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+  width: 100%;
+  padding: 0rem 1rem;
+}
+
+
+.table-container1 {
+  grid-column: span 2; /* Hacer que la tabla ocupe tres columnas */
+  border: 1px solid #575656;
+  border-radius: 10px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);
+  background-color: #252e3f;
+  margin-top: 5%;
+  height: 145%;
+  padding: 0rem 1rem;
+
+}
+
+.table-container {
+  grid-column: span 3; /* Hacer que la tabla ocupe tres columnas */
+  border: 1px solid #575656;
+  border-radius: 10px;
+  box-shadow: 4px 4px 4px rgba(179, 74, 74, 0.1);
+  background-color: #252e3f;
+  margin:0%;
+  padding: 1rem 1rem;
+  
+}
+
+.table {
+  margin: 5px 5px 5px 5px; /* 5px de espacio en cada lado, centrado horizontalmente */
+  border: 1px solid #575656;
+  border-radius: 10px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  padding-left: 15px;
+  width: 100%;
+  text-align: center;
+  opacity: 0.8;
+
+}
+.title-visualizacion{
+  font-weight: bold;
+  text-align: center;
+}
+
+.mapa-container {
+  grid-column: span 2; /* Hacer que la tabla ocupe tres columnas */
+  border: 1px solid #575656;
+  border-radius: 10px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  background-color: #252e3f;
+  width: 100%;  
+  text-align: center;
+ 
+}
+
+.line-chart-container {
+  grid-column: span 3; /* Hacer que la tabla ocupe tres columnas */
+  border: 1px solid #575656;
+  border-radius: 10px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  background-color: #252e3f;
+  width: 100%;  
+  text-align: center;
+  
+}
+.line-chart-titel {
+  grid-column: span 3; /* Hacer que la tabla ocupe tres columnas */
   border: 1px solid #575656;
   border-radius: 10px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
@@ -444,65 +559,6 @@ hr {
   width: 100%;  
   text-align: center;
 }
-/* left-container */
-.left-container {
-  background-color: #252e3f;
-  margin-top: 35px;
-  padding: 0rem 2rem;
-  min-height: calc(100vh - 5.5rem);
-  width: 25%;
-}
-
-
-/* right-container */
-.right-container {
-  margin-top: 20px;
-  margin-left: 50px; /* Agregamos un espacio de 50px a la izquierda */
-  background-color: #252e3f;
-  padding: 0rem 2rem;
-  /*min-height: calc(100vh - 5.5rem);*/
-}
-
-.cards-container {
-  margin: 1%;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 20px;
-  width: 50%;
-}
-
-.card {
-  border: 1px solid #575656;
-  border-radius: 10px;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
-  padding: 15px;
-  background-color: #a5a0a0;
-  text-align: center;
-}
-
-.card-title {
-  font-weight: bold;
-  text-align: center;
-}
-
-.table-container {
-  grid-column: span 3; /* Hacer que la tabla ocupe tres columnas */
-}
-
-.table {
-  border-collapse: collapse;
-  border: 1px solid #575656;
-  border-radius: 10px;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
-  padding: 15px;
-  background-color: #a5a0a0;
-  text-align: center;
-  width: 100%; /* Ancho de la tabla */
-}
-
-
-
-
 /* Media Queries
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 /*
