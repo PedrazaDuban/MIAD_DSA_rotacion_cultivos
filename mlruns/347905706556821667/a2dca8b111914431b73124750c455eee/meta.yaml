@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/luc23/OneDrive/Escritorio/proyecto%20DAS/MIAD_DSA_rotacion_cultivos/mlruns/347905706556821667/a2dca8b111914431b73124750c455eee/artifacts
+end_time: 1699804561059
+entry_point_name: ''
+experiment_id: '347905706556821667'
+lifecycle_stage: active
+run_id: a2dca8b111914431b73124750c455eee
+run_name: sklearn-diab-2023-11-12 08:55:46
+run_uuid: a2dca8b111914431b73124750c455eee
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1699804547206
+status: 3
+tags: []
+user_id: luc23
