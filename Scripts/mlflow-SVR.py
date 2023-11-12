@@ -62,7 +62,7 @@ from sklearn.metrics import mean_squared_error
 
 
 # registre el experimento
-experiment = mlflow.set_experiment("sklearn-SVR")
+experiment = mlflow.set_experiment("SVR")
 #nombre incremental
 time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 #nombre incremental
@@ -75,11 +75,11 @@ with mlflow.start_run(run_name=run_name):
     C = 1.0             # Regularizacion del modelo
     kernel = 'rbf'     # Funcion Kernel
     gamma = 'auto'      # Influencia que tiene un solo ejemplo de entrenamiento
-    epsilon = 0.5       # Magnitud permitida del margen del modelo
+    epsilon = 1       # Magnitud permitida del margen del modelo
     shrinking = True    # Heuristica de reduccion de vectores
     tol = 0.01          # Criterio de tolerancia para la convergencia del algoritmo
     cache_size = 200    # Memoria cache usada por el kernel
-    max_iter = 4000     # Numero maximo de iteraciones permitidas para la convergencia del algoritmo
+    max_iter = 2000     # Numero maximo de iteraciones permitidas para la convergencia del algoritmo
     verbose = True       # Imprime mensajes detallados durante el entrenamiento
     
     # Crear el modelo de Support Vector Regressor
@@ -93,6 +93,7 @@ with mlflow.start_run(run_name=run_name):
     mlflow.log_param("C", C)
     mlflow.log_param("kernel", kernel)
     mlflow.log_param("gamma", gamma)
+    mlflow.log_param("epsilon", epsilon)
     mlflow.log_param("shrinking", shrinking)
     mlflow.log_param("tol", tol)
     mlflow.log_param("cache_size", cache_size)
