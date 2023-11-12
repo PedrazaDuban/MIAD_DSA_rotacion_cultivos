@@ -15,14 +15,14 @@ from sklearn.preprocessing import robust_scale
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import LabelEncoder
 
-with open('data/Evaluaciones_Agropecuarias_Municipales_EVA.csv', 'r', encoding='utf-8') as file:
+with open('C:\Users\luc23\OneDrive\Escritorio\proyecto DAS\MIAD_DSA_rotacion_cultivos\data\Evaluaciones_Agropecuarias_Municipales_EVA.csv') as file:
     evaluaciones = pd.read_csv(file)
-evaluaciones2=evaluaciones[['CÓD. MUN.', 'CULTIVO']]
-pivot = np.round(pd.pivot_table(evaluaciones2, index='CÓD. MUN.',
+evaluaciones2=evaluaciones[['COD. MUN.', 'CULTIVO']]
+pivot = np.round(pd.pivot_table(evaluaciones2, index='COD. MUN.',
                                 columns='CULTIVO', aggfunc= len, fill_value=0))
 pivot.reset_index(inplace=True)
-pivot['DPTOMPIO']=pivot['CÓD. MUN.']
-municipios=gpd.read_file("data\MunicipiosVeredas19MB.json")
+pivot['DPTOMPIO']=pivot['COD. MUN.']
+municipios=gpd.read_file("C:\Users\luc23\OneDrive\Escritorio\proyecto DAS\MIAD_DSA_rotacion_cultivos\data\MunicipiosVeredas19MB.json")
 municipios['DPTOMPIO']=municipios[['DPTOMPIO']].apply(pd.to_numeric)
 municipios2=municipios[['DPTOMPIO','geometry']]
 pivot = pivot.astype({'CÓD. MUN.':'int'})
