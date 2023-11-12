@@ -78,7 +78,7 @@ run_name=f"sklearn-diab-{time}"
 # Para ver el resultado de las corridas haga click en Experimentos en el menú izquierdo. 
 with mlflow.start_run(run_name=run_name):
     # defina los parámetros del modelo
-    n_estimators = 200 
+    n_estimators = 500 
     max_depth = 6
     max_features = 4
     # Cree el modelo con los parámetros definidos y entrénelo
