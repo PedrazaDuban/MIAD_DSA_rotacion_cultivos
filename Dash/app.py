@@ -19,8 +19,11 @@ años = Inputs['AÑO'].unique().tolist()
 departamentos = Inputs['DEPARTAMENTO'].unique().tolist()
 cultivos = Inputs['CULTIVO'].unique().tolist()
 
+CantidadCultivos = len(Inputs['CULTIVO'].unique())
 
-total_departamentos = len(Inputs['DEPARTAMENTO'].unique())
+#AreaSembrada = Inputs["Área Sembrada(ha)"].sum()
+#AreaCosechada = Inputs["Área Cosechada(ha)"].sum()
+
 # Datos de ejemplo
 data = {
     'Nombre': ['Juan', 'Ana', 'Luis', 'María', 'Pedro'],
@@ -96,18 +99,19 @@ html.Div([
 html.Div([             
 # Contenedor cards
 html.Div([                  
-    html.Div("Card 1", className="card-title"),
-    html.Div(id="card-Valor"),
+    html.Div("Cantidad de Cultivos", className="card-title"),
+    html.Div(f"{CantidadCultivos}", className="card-valor"),
 ], className="card"),           
 
 
 html.Div([
-html.Div("Card 2", className="card-titdle"),
-# Contenido de la Card 2
+    html.Div("Área Sembrada", className="card-titdle"),
+    html.Div(f"{CantidadCultivos}", className="card-valor"),
 ], className="card"),
+
 html.Div([
-html.Div("Card 3", className="card-title"),
-# Contenido de la Card 3
+    html.Div("Ärea Cosechada", className="card-title"),
+    html.Div(f"{CantidadCultivos}", className="card-valor"),
 ], className="card"),# Contenedor cards
 # Contenedor de la tabla
 html.Div([
@@ -164,14 +168,6 @@ def update_municipios(departamento):
 
 #Llamado a la base de card 1
 
-@app.callback(
-    Output("card-Valor", "children"),
-    Input("trigger-button", "n_clicks"),  # Un botón que dispara la actualización
-)
-def update_card(total_departamentos):
-    # Supongamos que tienes una variable total_departamentos previamente calculada
-    return f"Total de Departamentos: {total_departamentos}"
-
 
 ##mapa #https://plotly.com/python/maps/
 
@@ -189,7 +185,7 @@ def display_choropleth(candidate):
         projection="mercator", range_color=[0, 6500])
     map.update_geos(fitbounds="locations", visible=False)
     map.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
-    map.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font_color="#2cfec1")
+    #map.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font_color="#2cfec1")
     return map 
 
 
