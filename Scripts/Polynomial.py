@@ -106,7 +106,7 @@ run_name = f"Polynomial-{time}"
 with mlflow.start_run(run_name=run_name):
     # Define Parametros
     # Crear características polinómicas
-    degree = 2    
+    degree = 5    
     poly = PolynomialFeatures(degree=degree)
     X_train_poly = poly.fit_transform(X_train)
     X_test_poly = poly.fit_transform(X_test)
@@ -136,4 +136,5 @@ with mlflow.start_run(run_name=run_name):
     print(f'MAE: {mae}')
 
     # Finaliza el tracking de experimentos con MLflow
-    mlflow.end_run()
+    
+
