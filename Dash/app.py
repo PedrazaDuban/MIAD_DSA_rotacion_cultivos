@@ -35,8 +35,8 @@ encoded_logo = base64.b64encode(logo_data).decode()
 app.layout = html.Div([
 # Contenedor header
 html.Div([
-html.Img(src=f"data:image/png;base64,{encoded_logo}", height=100),
-html.H1("Rendimiento Agrícola por Hectárea"),
+    html.Img(src=f"data:image/png;base64,{encoded_logo}", height=100),
+    html.H1("Rendimiento Agrícola por Hectárea"),
 ], className="header"),
 
 #contenedor de los dropdowns o filtros
@@ -139,7 +139,7 @@ html.Div([
 # Contenedor de la tabla
 
 html.Div([
-html.H4('Rendimiento en Toneladas por Hectarea', className="title-line-chart"),
+html.H4('Rendimiento en Toneladas por Hectarea', className="title-visualizacion"),
 dcc.Graph(id="line-chart", className="line-chart"),
 ], className="line-chart-container"),
 
@@ -223,7 +223,12 @@ def update_line_chart(grupo_cultivo, año, municipio, departamento, cultivo):
 
     fig = go.Figure(data=go.Scatter(x=x_values, y=y_values, mode='lines', marker_color='#2cfec1'))
     #fig = px.line(data2, x='local_timestamp', y="Demanda total [MW]", markers=True, labels={"local_timestamp": "Fecha"})
-    fig.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font_color="#2cfec1")
+    fig.update_layout(paper_bgcolor='rgba(0,0,0,0)', 
+                      plot_bgcolor='rgba(0,0,0,0)', 
+                      font_color="#2cfec1",
+                      font_size=14,
+                      xaxis_title="Fecha",
+                      yaxis_title="Predición de Cultivo")
     fig.update_xaxes(showgrid=True, gridwidth=0.25, gridcolor='#7C7C7C')
     fig.update_yaxes(showgrid=True, gridwidth=0.25, gridcolor='#7C7C7C')
     #fig.update_traces(line_color='#2cfec1')
