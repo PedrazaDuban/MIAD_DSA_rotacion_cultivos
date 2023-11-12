@@ -11,6 +11,9 @@ from sklearn.model_selection import train_test_split
 import pandas as pd
 import numpy as np
 import geopandas as gpd
+from sklearn.preprocessing import robust_scale
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import LabelEncoder
 
 with open('C:\Users\luc23\OneDrive\Escritorio\proyecto DAS\MIAD_DSA_rotacion_cultivos\data\Evaluaciones_Agropecuarias_Municipales_EVA.csv') as file:
     evaluaciones = pd.read_csv(file)
