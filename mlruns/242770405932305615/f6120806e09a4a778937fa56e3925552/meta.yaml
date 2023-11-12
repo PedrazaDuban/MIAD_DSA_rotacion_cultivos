@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/luc23/OneDrive/Escritorio/proyecto%20DAS/MIAD_DSA_rotacion_cultivos/mlruns/242770405932305615/f6120806e09a4a778937fa56e3925552/artifacts
+end_time: 1699805059506
+entry_point_name: ''
+experiment_id: '242770405932305615'
+lifecycle_stage: active
+run_id: f6120806e09a4a778937fa56e3925552
+run_name: Booster-2023-11-12 09:03:51
+run_uuid: f6120806e09a4a778937fa56e3925552
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1699805032077
+status: 3
+tags: []
+user_id: luc23
