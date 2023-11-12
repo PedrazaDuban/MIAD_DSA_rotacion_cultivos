@@ -79,7 +79,7 @@ with mlflow.start_run(run_name=run_name):
     shrinking = True    # Heuristica de reduccion de vectores
     tol = 0.1          # Criterio de tolerancia para la convergencia del algoritmo
     cache_size = 200    # Memoria cache usada por el kernel
-    max_iter = 5000     # Numero maximo de iteraciones permitidas para la convergencia del algoritmo
+    max_iter = 6000     # Numero maximo de iteraciones permitidas para la convergencia del algoritmo
     verbose = True      # Imprime mensajes detallados durante el entrenamiento
     
     # Crear el modelo de Support Vector Regressor
