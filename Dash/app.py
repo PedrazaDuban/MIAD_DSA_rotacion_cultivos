@@ -12,7 +12,8 @@ import geopandas as gpd
 
 app = dash.Dash(__name__)
 
-Inputs = pd.read_csv('../data/Evaluaciones_Agropecuarias_Municipales_EVA.csv')
+with open('data/Evaluaciones_Agropecuarias_Municipales_EVA.csv', 'r', encoding='utf-8') as file:
+    Inputs = pd.read_csv(file)
 
 grupos_cultivos = Inputs['GRUPO \nDE CULTIVO'].unique().tolist()
 años = Inputs['AÑO'].unique().tolist()
@@ -28,7 +29,7 @@ CantidadCultivos = len(Inputs['CULTIVO'].unique())
 
 df = pd.DataFrame(Inputs, columns=[ 'DEPARTAMENTO', 'MUNICIPIO','GRUPO \nDE CULTIVO', 'CULTIVO', 'RENDIMIENTO_TONELADAS_HA']).head(10)
                                                                                                                 
-with open('img/Logo.png', 'rb') as f:
+with open('Dash/img/Logo.png', 'rb') as f:
     logo_data = f.read()
 encoded_logo = base64.b64encode(logo_data).decode()
 
