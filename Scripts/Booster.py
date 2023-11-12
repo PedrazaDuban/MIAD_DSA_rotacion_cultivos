@@ -85,20 +85,24 @@ with mlflow.start_run(run_name=run_name):
 }
     n_estimators = 500 
     max_depth = 4
-    min_samples = 4
+    min_samples_split = 5
+    learning_rate = 0.01
+    loss = 'squared_error'
     # Cree el modelo con los parámetros definidos y entrénelo
-    rf = RandomForestRegressor(n_estimators = n_estimators, max_depth = max_depth, max_features = max_features)
-    rf.fit(X_train, y_train)
+    reg = ensemble.GradientBoostingRegressor(n_estimators = n_estimators, max_depth=max_depth, min_samples_split=min_samples_split, learning_rate=learning_rate,loss=loss)
+    reg.fit(X_train, y_train)
     # Realice predicciones de prueba
-    predictions = rf.predict(X_test)
+    predictions = reg.predict(X_test)
   
     # Registre los parámetros
-    mlflow.log_param("num_trees", n_estimators)
+    mlflow.log_param("num_estimators", n_estimators)
     mlflow.log_param("maxdepth", max_depth)
-    mlflow.log_param("max_feat", max_features)
+    mlflow.log_param("min_samples_split", min_samples_split)
+    mlflow.log_param("learning_rate", learning_rate)
+    mlflow.log_param("loss", loss)
   
     # Registre el modelo
-    mlflow.sklearn.log_model(rf, "random-forest-model")
+    mlflow.sklearn.log_model(reg, "gradien-boosting-regressor")
   
     # Cree y registre la métrica de interés
     mse = mean_squared_error(y_test, predictions)
