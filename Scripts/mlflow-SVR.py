@@ -3,34 +3,32 @@ import pandas as pd
 import numpy as np
 import geopandas as gpd
 import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import robust_scale
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import LabelEncoder
 
 
-evaluaciones = pd.read_csv('../data/Evaluaciones_Agropecuarias_Municipales_EVA.csv')
+with open('data/Evaluaciones_Agropecuarias_Municipales_EVA.csv', 'r', encoding='utf-8') as file:
+    evaluaciones = pd.read_csv(file)
 evaluaciones2=evaluaciones[['CÓD. MUN.', 'CULTIVO']]
 pivot = np.round(pd.pivot_table(evaluaciones2, index='CÓD. MUN.',
                                 columns='CULTIVO', aggfunc= len, fill_value=0))
+pivot.reset_index(inplace=True)
 pivot['DPTOMPIO']=pivot['CÓD. MUN.']
-municipios=gpd.read_file("MunicipiosVeredas19MB.json")
-municipios=gpd.read_file("../data/MunicipiosVeredas19MB.json")
+
+municipios=gpd.read_file('data\MunicipiosVeredas19MB.json')
 municipios['DPTOMPIO']=municipios[['DPTOMPIO']].apply(pd.to_numeric)
 municipios2=municipios[['DPTOMPIO','geometry']]
 pivot = pivot.astype({'CÓD. MUN.':'int'})
 municipios3=pd.merge(municipios2,pivot, left_on='DPTOMPIO', right_on='DPTOMPIO')
 municipios3 = municipios3.iloc[: , 1:]
-from sklearn import metrics
-metrics.pairwise_distances(
-    municipios3.loc[:, ~municipios3.columns.isin(['geometry', 'CÓD. MUN.'])].head()
-).round(4)
-from sklearn.preprocessing import robust_scale
 db_scaled = robust_scale(municipios3.loc[:, ~municipios3.columns.isin(['geometry', 'CÓD. MUN.'])])
-# Initialize KMeans instance
-from sklearn.cluster import KMeans
 kmeans = KMeans(n_clusters=10)
 # Set the seed for reproducibility
 np.random.seed(1234)
 # Run K-Means algorithm
 k10cls = kmeans.fit(db_scaled)
-k10cls.labels_[:5]
 municipios3["k10cls"] = k10cls.labels_
 evaluaciones3 = pd.merge(evaluaciones,municipios3[['CÓD. MUN.','k10cls']],on='CÓD. MUN.', how='left')
 evaluaciones3=evaluaciones3.dropna(subset='Rendimiento\n(t/ha)')
@@ -39,25 +37,14 @@ evaluaciones3=evaluaciones3.dropna(subset='Rendimiento\n(t/ha)')
 evaluaciones3=evaluaciones3.dropna(subset='AÑO')
 evaluaciones3=evaluaciones3.dropna(subset='CULTIVO')
 evaluaciones3=evaluaciones3.dropna(subset='k10cls')
-
 Y=evaluaciones3['Rendimiento\n(t/ha)']
 X=evaluaciones3[['AÑO','CULTIVO','k10cls']]
 X = X.replace(',','', regex=True)
-
-from sklearn.preprocessing import LabelEncoder
 # Create arrary of categorial variables to be encoded
 categorical_cols = ['CULTIVO']
-
 le = LabelEncoder()
 # apply label encoder on categorical feature columns
 X[categorical_cols] = X[categorical_cols].apply(lambda col: le.fit_transform(col))
-
-from sklearn.svm import SVR
-from sklearn.metrics import mean_squared_error
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-
-# Dividir los datos en conjuntos de entrenamiento y prueba
 X_train, X_test, y_train, y_test = train_test_split(
     X, Y, test_size=0.25, random_state=13
 )
@@ -96,7 +83,7 @@ with mlflow.start_run(run_name=run_name):
     verbose = True       # Imprime mensajes detallados durante el entrenamiento
     
     # Crear el modelo de Support Vector Regressor
-    svr = SVR(C = C, kernel = kernel, gamma = gamma, epsilon = epsilon, shrinking = shrinking,tol = tol, cache_size = cache_size, max_iter = max_iter, verbose = verbose    )
+    svr = SVR(C = C, kernel = kernel, gamma = gamma, epsilon = epsilon, shrinking = shrinking,tol = tol, cache_size = cache_size, max_iter = max_iter, verbose = verbose)
     # Entrenar el modelo
     svr.fit(X_train, y_train)
     # Realice predicciones de prueba
