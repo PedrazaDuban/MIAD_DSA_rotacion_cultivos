@@ -2,8 +2,8 @@
 package_name: model-recomendar-cultivo
 
 # Archivos de datos
-train_data_file: bankchurn_train.csv
-test_data_file: bankchurn_test.csv
+train_data_file: Evaluaciones_Agropecuarias_Municipales_EVA_train.csv
+test_data_file: Evaluaciones_Agropecuarias_Municipales_EVA_test.csv
 
 # Variables
 # Objetivo
@@ -33,13 +33,10 @@ temp_features:
  - "Área Cosechada (ha)"
  - "Producción (t)"
  - "Rendimiento (t/ha)"
- - ESTADO FISICO PRODUCCION
+ - "ESTADO FISICO PRODUCCION"
  - "NOMBRE CIENTIFICO"
  - "CICLO DE CULTIVO"
- - ""
-
-
-
+ - "k10cls"
 
 # pipelines
 pipeline_name: modelo-model-recomendar-cultivo
@@ -59,7 +56,7 @@ learning_rate: 0.01
 
 # variables a mapear
 qual_vars:
-  - Attrition_Flag
+  - "Rendimiento (t/ha)"
 
 # 
 categorical_vars:
@@ -69,3 +66,4 @@ categorical_vars:
 qual_mappings:
   Attrited Customer: 1
   Existing Customer: 0
+
