@@ -241,4 +241,4 @@ def update_line_chart(grupo_cultivo, año, municipio, departamento, cultivo):
 
     return fig
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=True, port=8060)
