@@ -36,7 +36,7 @@ temp_features:
 - NUM_CLUSTERS
 
 # pipelines
-pipeline_name: modelo-model-recomendar-cultivo
+pipeline_name: model-recomendar-cultivo
 pipeline_save_file: model-recomendar-cultivo-output
 
 # fracción del conjunto de prueba
@@ -57,19 +57,11 @@ qual_vars:
 
 # 
 categorical_vars:
-  - NOMBRE_DEPARTAMENTO
-  - NOMBRE_MUNICIPIO
-  - GRUPO_CULTIVO
-  - SUBGRUPO_CULTIVO
   - NOMBRE_CULTIVO
-  - REGION_SISTEMA
-  - PERIODO
-  - ESTADO_PRODUCCION
-  - NOMBRE_CIENTIFICO
-  - CICLO_CULTIVO
+
 
 # mapeo de variables
 #qual_mappings:
 #  Attrited Customer: 1
-#  Existing Customer: 0
+# Existing Customer: 0
 
