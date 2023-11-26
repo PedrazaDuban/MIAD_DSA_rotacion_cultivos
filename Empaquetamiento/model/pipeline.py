@@ -2,6 +2,8 @@ from feature_engine.selection import DropFeatures
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.ensemble import RandomForestClassifier
+from sklearn import datasets, ensemble
+
 
 from model.config.core import config
 from model.processing import features as pp
@@ -26,10 +28,12 @@ abandono_pipe = Pipeline(
         ("scaler", MinMaxScaler()
          ),
         # Random forest 
-        ("Random Forest",
-            RandomForestClassifier(
+        ("GradientBoostingRegressor",
+            ensemble.GradientBoostingRegressor(
                 n_estimators = config.model_config.n_estimators, 
                 max_depth = config.model_config.max_depth,
+                min_samples_split = config.model_config.min_samples_split,
+                learning_rate = config.model_config.learning_rate,
                 random_state=config.model_config.random_state,
             ),
         ),

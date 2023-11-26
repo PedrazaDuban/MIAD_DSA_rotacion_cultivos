@@ -8,7 +8,7 @@ from model.predict import make_prediction
 def test_make_prediction(sample_input_data):
     # Given
     expected_first_prediction_value = 0
-    expected_no_predictions = 1127
+    expected_no_predictions = 47049
 
     # When
     result = make_prediction(input_data=sample_input_data)

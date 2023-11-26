@@ -2,41 +2,41 @@
 package_name: model-recomendar-cultivo
 
 # Archivos de datos
-train_data_file: Evaluaciones_Agropecuarias_Municipales_EVA_train.csv
-test_data_file: Evaluaciones_Agropecuarias_Municipales_EVA_test.csv
+train_data_file: cultivos_train.csv
+test_data_file: cultivos_test.csv
 
 # Variables
 # Objetivo
-target: "Rendimiento (t/ha)"
+target: RENDIMIENTO_TONELADAS_HA
 
 
 features:
- - "DEPARTAMENTO"
- - "MUNICIPIO"
- - "AÑO"
- - "GRUPO DE CULTIVO"
- - "CULTIVO"
- - "k10cls"
+  - NOMBRE_DEPARTAMENTO
+  - NOMBRE_MUNICIPIO
+  - ANIO
+  - GRUPO_CULTIVO
+  - NOMBRE_CULTIVO
+  - NUM_CLUSTERS
 
 temp_features:
- - "CÓD.DEP."
- - "DEPARTAMENTO"
- - "CÓD. MUN."
- - "MUNICIPIO"
- - "GRUPO DE CULTIVO"
- - "SUBGRUPO DE CULTIVO"
- - "CULTIVO"
- - "DESAGREGACIÓN REGIONAL Y/O SISTEMA PRODUCTIVO"
- - "AÑO"
- - "PERIODO"
- - "Área Sembrada (ha)"
- - "Área Cosechada (ha)"
- - "Producción (t)"
- - "Rendimiento (t/ha)"
- - "ESTADO FISICO PRODUCCION"
- - "NOMBRE CIENTIFICO"
- - "CICLO DE CULTIVO"
- - "k10cls"
+- CODIGO_DEPARTAMENTO
+- NOMBRE_DEPARTAMENTO
+- CODIGO_MUNICIPIO
+- NOMBRE_MUNICIPIO
+- GRUPO_CULTIVO
+- SUBGRUPO_CULTIVO
+- NOMBRE_CULTIVO
+- REGION_SISTEMA
+- ANIO
+- PERIODO
+- AREA_SIEMBRA_HA
+- AREA_COSECHA_HA
+- PRODUCCION_TONELADAS
+- RENDIMIENTO_TONELADAS_HA
+- ESTADO_PRODUCCION
+- NOMBRE_CIENTIFICO,
+- CICLO_CULTIVO
+- NUM_CLUSTERS
 
 # pipelines
 pipeline_name: modelo-model-recomendar-cultivo
@@ -56,14 +56,14 @@ learning_rate: 0.01
 
 # variables a mapear
 qual_vars:
-  - "Rendimiento (t/ha)"
+  - RENDIMIENTO_TONELADAS_HA
 
 # 
-categorical_vars:
-  - Attrition_Flag
+#categorical_vars:
+#  - Attrition_Flag
 
 # mapeo de variables
-qual_mappings:
-  Attrited Customer: 1
-  Existing Customer: 0
+#qual_mappings:
+#  Attrited Customer: 1
+#  Existing Customer: 0
 
