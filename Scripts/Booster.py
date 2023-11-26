@@ -81,7 +81,7 @@ run_name=f"Booster-{time}"
 with mlflow.start_run(run_name=run_name):
     # defina los parámetros del modelo
     
-    n_estimators = 200 
+    n_estimators = 500 
     max_depth = 4
     min_samples_split = 5
     learning_rate = 0.01

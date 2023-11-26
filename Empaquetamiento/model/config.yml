@@ -1,0 +1,71 @@
+# Nombre del paquete
+package_name: model-recomendar-cultivo
+
+# Archivos de datos
+train_data_file: bankchurn_train.csv
+test_data_file: bankchurn_test.csv
+
+# Variables
+# Objetivo
+target: "Rendimiento (t/ha)"
+
+
+features:
+ - "DEPARTAMENTO"
+ - "MUNICIPIO"
+ - "AÑO"
+ - "GRUPO DE CULTIVO"
+ - "CULTIVO"
+ - "k10cls"
+
+temp_features:
+ - "CÓD.DEP."
+ - "DEPARTAMENTO"
+ - "CÓD. MUN."
+ - "MUNICIPIO"
+ - "GRUPO DE CULTIVO"
+ - "SUBGRUPO DE CULTIVO"
+ - "CULTIVO"
+ - "DESAGREGACIÓN REGIONAL Y/O SISTEMA PRODUCTIVO"
+ - "AÑO"
+ - "PERIODO"
+ - "Área Sembrada (ha)"
+ - "Área Cosechada (ha)"
+ - "Producción (t)"
+ - "Rendimiento (t/ha)"
+ - ESTADO FISICO PRODUCCION
+ - "NOMBRE CIENTIFICO"
+ - "CICLO DE CULTIVO"
+ - ""
+
+
+
+
+# pipelines
+pipeline_name: modelo-model-recomendar-cultivo
+pipeline_save_file: model-recomendar-cultivo-output
+
+# fracción del conjunto de prueba
+test_size: 0.25
+
+# semilla
+random_state: 42
+
+# hiperparámetros del modelo 
+n_estimators: 500
+max_depth: 4
+min_samples_split: 5
+learning_rate: 0.01
+
+# variables a mapear
+qual_vars:
+  - Attrition_Flag
+
+# 
+categorical_vars:
+  - Attrition_Flag
+
+# mapeo de variables
+qual_mappings:
+  Attrited Customer: 1
+  Existing Customer: 0
