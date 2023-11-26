@@ -15,23 +15,23 @@ from sklearn.cluster import KMeans
 
 app = dash.Dash(__name__)
 
-with open('../data/Evaluaciones_Agropecuarias_Municipales_EVA.csv', 'r', encoding='utf-8') as file:
+with open('../data/cultivos.csv', 'r', encoding='utf-8') as file:
     Inputs = pd.read_csv(file)
 
 
-grupos_cultivos = Inputs['GRUPO \nDE CULTIVO'].unique().tolist()
-años = Inputs['AÑO'].unique().tolist()
-departamentos = Inputs['DEPARTAMENTO'].unique().tolist()
-cultivos = Inputs['CULTIVO'].unique().tolist()
+grupos_cultivos = Inputs['GRUPO_CULTIVO'].unique().tolist()
+años = Inputs['ANIO'].unique().tolist()
+departamentos = Inputs['NOMBRE_DEPARTAMENTO'].unique().tolist()
+cultivos = Inputs['NOMBRE_CULTIVO'].unique().tolist()
 
-CantidadCultivos = len(Inputs['CULTIVO'].unique())
+CantidadCultivos = len(Inputs['NOMBRE_CULTIVO'].unique())
 
 #AreaSembrada = Inputs["Área Sembrada(ha)"].sum()
 #AreaCosechada = Inputs["Área Cosechada(ha)"].sum()
 
 # Datos de ejemplo
 
-df = pd.DataFrame(Inputs, columns=[ 'DEPARTAMENTO', 'MUNICIPIO','GRUPO \nDE CULTIVO', 'CULTIVO', 'RENDIMIENTO_TONELADAS_HA']).head(10)
+df = pd.DataFrame(Inputs, columns=[ 'NOMBRE_DEPARTAMENTO', 'NOMBRE_MUNICIPIO','GRUPO_CULTIVO', 'NOMBRE_CULTIVO', 'RENDIMIENTO_TONELADAS_HA']).head(10)
                                                                                                                 
 with open('./img/Logo.png', 'rb') as f:
     logo_data = f.read()
@@ -170,7 +170,7 @@ dcc.Graph(id="line-chart", className="line-chart"),
 )
 def update_municipios(departamento):
     # Filtra los municipios basados en el departamento seleccionado
-    municipios = Inputs[Inputs['DEPARTAMENTO'] == departamento]['MUNICIPIO'].unique()
+    municipios = Inputs[Inputs['NOMBRE_DEPARTAMENTO'] == departamento]['NOMBRE_MUNICIPIO'].unique()
     options = [{'label': municipio, 'value': municipio} for municipio in municipios]
     return options
 
@@ -216,11 +216,11 @@ def display_choropleth(candidate):
 def update_line_chart(grupo_cultivo, año, municipio, departamento, cultivo):
     # Filtra los datos basados en las selecciones
     filtered_data = Inputs[
-        (Inputs['GRUPO \nDE CULTIVO'] == grupo_cultivo) &
-        (Inputs['AÑO'] == año) &
-        (Inputs['DEPARTAMENTO'] == departamento) &
-        (Inputs['MUNICIPIO'] == municipio) &
-        (Inputs['CULTIVO'] == cultivo)
+        (Inputs['GRUPO_CULTIVO'] == grupo_cultivo) &
+        (Inputs['ANIO'] == año) &
+        (Inputs['NOMBRE_DEPARTAMENTO'] == departamento) &
+        (Inputs['NOMBRE_MUNICIPIO'] == municipio) &
+        (Inputs['NOMBRE_CULTIVO'] == cultivo)
     ]
     x_values = [1, 2, 3, 4, 5]
     y_values = [10, 8, 12, 6, 9]
