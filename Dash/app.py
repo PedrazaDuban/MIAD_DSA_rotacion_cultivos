@@ -8,12 +8,16 @@ import datetime as dt
 import base64
 import plotly.express as px
 import geopandas as gpd
+from sklearn.preprocessing import robust_scale
+from sklearn.cluster import KMeans
+
 
 
 app = dash.Dash(__name__)
 
-with open('data/Evaluaciones_Agropecuarias_Municipales_EVA.csv', 'r', encoding='utf-8') as file:
+with open('../data/Evaluaciones_Agropecuarias_Municipales_EVA.csv', 'r', encoding='utf-8') as file:
     Inputs = pd.read_csv(file)
+
 
 grupos_cultivos = Inputs['GRUPO \nDE CULTIVO'].unique().tolist()
 años = Inputs['AÑO'].unique().tolist()
@@ -29,7 +33,7 @@ CantidadCultivos = len(Inputs['CULTIVO'].unique())
 
 df = pd.DataFrame(Inputs, columns=[ 'DEPARTAMENTO', 'MUNICIPIO','GRUPO \nDE CULTIVO', 'CULTIVO', 'RENDIMIENTO_TONELADAS_HA']).head(10)
                                                                                                                 
-with open('Dash/img/Logo.png', 'rb') as f:
+with open('./img/Logo.png', 'rb') as f:
     logo_data = f.read()
 encoded_logo = base64.b64encode(logo_data).decode()
 
@@ -136,6 +140,7 @@ html.Div([
     dcc.Graph(id="mapa", className="mapa-graph",
               style={'backgroundColor': 'rgba(0,0,0,0)'}
               ), 
+ 
 ],className="mapa-container"),
 # Contenedor de la tabla
 
