@@ -3,6 +3,7 @@ from config.core import config
 from pipeline import abandono_pipe
 from processing.data_manager import load_dataset, save_pipeline
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
 
 
 def run_training() -> None:
@@ -10,7 +11,12 @@ def run_training() -> None:
 
     # read training data
     data = load_dataset(file_name=config.app_config.train_data_file)
-
+    # Create arrary of categorial variables to be encoded
+    categorical_cols = ['NOMBRE_CULTIVO']
+    le = LabelEncoder()
+    # apply label encoder on categorical feature columns
+    data[categorical_cols] = data[categorical_cols].apply(lambda col: le.fit_transform(col))
+    
     # divide train and test
     X_train, X_test, y_train, y_test = train_test_split(
         data[config.model_config.features],  # predictors

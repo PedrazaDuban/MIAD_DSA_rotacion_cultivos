@@ -39,14 +39,12 @@ def validate_inputs(*, input_data: pd.DataFrame) -> Tuple[pd.DataFrame, Optional
 
 
 class DataInputSchema(BaseModel):
-    NOMBRE_DEPARTAMENTO: Optional[str]
-    NOMBRE_MUNICIPIO: Optional[str]
-    GRUPO_CULTIVO:  Optional[str]
     NOMBRE_CULTIVO: Optional[str]
-    REGION_SISTEMA: Optional[str]
     ANIO: Optional[int]
-    NUM_CLUSTERS: Optional[int]
+    NUM_CLUSTERS: Optional[float]
 
 
 class MultipleDataInputs(BaseModel):
     inputs: List[DataInputSchema]
+
+
