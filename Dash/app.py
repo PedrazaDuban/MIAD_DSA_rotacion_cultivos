@@ -29,9 +29,11 @@ NumClusters = len(Inputs['NUM_CLUSTERS'].unique())
 NumMunicipios = len(Inputs['NOMBRE_MUNICIPIO'].unique())
 NumMunicipios_formateado = "{:,}".format(NumMunicipios)
 
-# Datos de ejemplo
+# Datos de ejemplo Tabla
 
-df = pd.DataFrame(Inputs, columns=['NOMBRE_CULTIVO','NUM_CLUSTERS', 'RENDIMIENTO_TONELADAS_HA']).unique().head(10)
+df = pd.DataFrame(Inputs, columns=['NOMBRE_CULTIVO','NUM_CLUSTERS', 'RENDIMIENTO_TONELADAS_HA'])
+df_top10 = df.apply(lambda x: x.unique()[:10])
+
                                                                                                                 
 with open('./img/Logo.png', 'rb') as f:
     logo_data = f.read()
@@ -122,7 +124,7 @@ html.Div([
     # Contenedor de la tabla
     html.Div([
         html.H4('Tabla de Recomendaciones', className="title-visualizacion"),
-        dash_table.DataTable(df.to_dict('records'), [{"name": i, "id": i} for i in df.columns],
+        dash_table.DataTable(df_top10.to_dict('records'), [{"name": i, "id": i} for i in df.columns],
                              style_cell={'backgroundColor': 'rgba(0,0,0,0)', 'color': '#2cfec1','textAlign': 'center'},
                              ), 
     ], className="table-container"),  # Contenedor de la tabla
