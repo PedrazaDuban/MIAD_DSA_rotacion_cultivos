@@ -4,7 +4,8 @@ from types import FrameType
 from typing import List, cast
 
 from loguru import logger
-from pydantic import AnyHttpUrl, BaseSettings
+#from pydantic import AnyHttpUrl, BaseSettings
+from pydantic_settings import AnyHttpUrl, BaseSettings
 
 # Nivel del logger
 class LoggingSettings(BaseSettings):
