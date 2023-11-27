@@ -4,8 +4,8 @@ from types import FrameType
 from typing import List, cast
 
 from loguru import logger
-from pydantic import AnyHttpUrl, BaseSettings
-#from pydantic_settings import AnyHttpUrl, BaseSettings
+from pydantic import AnyHttpUrl
+from pydantic_settings import BaseSettings
 
 # Nivel del logger
 class LoggingSettings(BaseSettings):
@@ -27,7 +27,7 @@ class Settings(BaseSettings):
         "https://localhost:8000",  # type: ignore
     ]
 
-    PROJECT_NAME: str = "Recomendación de cultivo API"
+    PROJECT_NAME: str = "Banckchurn API"
 
     class Config:
         case_sensitive = True
