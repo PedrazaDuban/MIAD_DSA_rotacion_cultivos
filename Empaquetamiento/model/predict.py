@@ -9,7 +9,7 @@ from model.processing.data_manager import load_pipeline
 from model.processing.validation import validate_inputs
 
 pipeline_file_name = f"{config.app_config.pipeline_save_file}{_version}.pkl"
-_abandono_pipe = load_pipeline(file_name=pipeline_file_name)
+_cultivo_recomendado_pipe = load_pipeline(file_name=pipeline_file_name)
 
 
 def make_prediction(
@@ -23,7 +23,13 @@ def make_prediction(
     results = {"predictions": None, "version": _version, "errors": errors}
 
     if not errors:
-        predictions = _abandono_pipe.predict(
+        # Create arrary of categorial variables to be encoded
+        categorical_cols = ['NOMBRE_CULTIVO']
+        le = LabelEncoder()
+        # apply label encoder on categorical feature columns
+        validated_data[categorical_cols] = validated_data[categorical_cols].apply(lambda col: le.fit_transform(col))
+        
+        predictions = _cultivo_recomendado_pipe.predict(
             X=validated_data[config.model_config.features]
         )
         results = {
