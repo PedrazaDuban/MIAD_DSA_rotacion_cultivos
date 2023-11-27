@@ -1,0 +1,26 @@
+Metadata-Version: 2.1
+Name: model-recomendar-cultivo
+Version: 0.0.1
+Summary: Ejemplo de empaquetamiento de modelo de recomendacion de cultivo.
+Home-page: 
+Author: Gruppo 20 DSA
+Author-email: h.boada@uniandes.edu.co, y-baez@uniandes.edu.co, d.pedrazav@uniandes.edu.co, l.campana@uniandes.edu.co
+License: BSD-3
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Requires-Python: >=3.10.0
+Description-Content-Type: text/markdown
+Requires-Dist: numpy<2.0.0,>=1.23.0
+Requires-Dist: pandas<3.0.0,>=2.0.0
+Requires-Dist: scikit-learn<2.0.0,>=1.3.2
+Requires-Dist: joblib<2.0.0,>=1.1.0
+Requires-Dist: pydantic<3.0.0,>=2.0.0
+Requires-Dist: strictyaml<2.0.0,>=1.7.0
+Requires-Dist: feature-engine<2.0.0,>=1.6.1
+Requires-Dist: geopandas<1.0.0,>=0.14.0
+
+Ejemplo de empaquetamiento de modelo de recomendacion de cultivo.

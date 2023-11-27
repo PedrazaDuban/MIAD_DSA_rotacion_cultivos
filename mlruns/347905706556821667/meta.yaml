@@ -1,6 +1,7 @@
 artifact_location: file:///C:/Users/luc23/OneDrive/Escritorio/proyecto%20DAS/MIAD_DSA_rotacion_cultivos/mlruns/347905706556821667
 creation_time: 1699804546911
 experiment_id: '347905706556821667'
-last_update_time: 1699804546911
+last_update_time: 1699821884165
 lifecycle_stage: active
-name: sklearn-diab
+name: RandomForest
+tags: {}

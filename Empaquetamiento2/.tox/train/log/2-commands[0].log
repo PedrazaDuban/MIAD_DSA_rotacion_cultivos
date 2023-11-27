@@ -1,0 +1,38 @@
+name: train
+run_id: commands[0]
+env HOME: /home/ubuntu
+env LANG: C.UTF-8
+env TERM: xterm-256color
+env PATH: /home/ubuntu/MIAD_DSA_rotacion_cultivos/Empaquetamiento2/.tox/test_package/bin:/home/ubuntu/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+env PIP_DISABLE_PIP_VERSION_CHECK: 1
+env PYTHONIOENCODING: utf-8
+env PYTHONPATH: .
+env PYTHONHASHSEED: 0
+env TOX_ENV_NAME: train
+env TOX_WORK_DIR: /home/ubuntu/MIAD_DSA_rotacion_cultivos/Empaquetamiento2/.tox
+env TOX_ENV_DIR: /home/ubuntu/MIAD_DSA_rotacion_cultivos/Empaquetamiento2/.tox/test_package
+env VIRTUAL_ENV: /home/ubuntu/MIAD_DSA_rotacion_cultivos/Empaquetamiento2/.tox/test_package
+env COLUMNS: 111
+env LINES: 19
+metadata pid: 2146
+cwd: /home/ubuntu/MIAD_DSA_rotacion_cultivos/Empaquetamiento2
+allow: /home/ubuntu/MIAD_DSA_rotacion_cultivos/Empaquetamiento2/.tox/test_package/bin/*:train
+cmd: python model/train_pipeline.py
+exit_code: 1
+
+standard error:
+Traceback (most recent call last):
+  File "/home/ubuntu/MIAD_DSA_rotacion_cultivos/Empaquetamiento2/model/train_pipeline.py", line 2, in <module>
+    from config.core import config
+  File "/home/ubuntu/MIAD_DSA_rotacion_cultivos/Empaquetamiento2/model/config/core.py", line 7, in <module>
+    import model
+  File "/home/ubuntu/MIAD_DSA_rotacion_cultivos/Empaquetamiento2/model/__init__.py", line 3, in <module>
+    from model.config.core import PACKAGE_ROOT, config
+  File "/home/ubuntu/MIAD_DSA_rotacion_cultivos/Empaquetamiento2/model/config/core.py", line 88, in <module>
+    config = create_and_validate_config()
+  File "/home/ubuntu/MIAD_DSA_rotacion_cultivos/Empaquetamiento2/model/config/core.py", line 82, in create_and_validate_config
+    model_config=ModelConfig(**parsed_config.data),
+  File "pydantic/main.py", line 341, in pydantic.main.BaseModel.__init__
+pydantic.error_wrappers.ValidationError: 1 validation error for ModelConfig
+target
+  value is not a valid float (type=type_error.float)
