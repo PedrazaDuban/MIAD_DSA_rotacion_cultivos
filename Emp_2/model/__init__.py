@@ -1,4 +1,9 @@
 import logging
+from pathlib import Path
+
+# Añade la ruta absoluta al sys.path antes de intentar importar 'model'
+import sys
+sys.path.append(r"D:\Repo\MIAD_DSA_rotacion_cultivos")
 
 from model.config.core import PACKAGE_ROOT, config
 
