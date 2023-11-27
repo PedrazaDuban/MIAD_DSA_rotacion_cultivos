@@ -10,10 +10,21 @@ import plotly.express as px
 import geopandas as gpd
 from sklearn.preprocessing import robust_scale
 from sklearn.cluster import KMeans
+import requests
+import os
+import json
+from loguru import logger
 
+external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
+# app server
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+server = app.server
 
-app = dash.Dash(__name__)
+# PREDICTION API URL 
+api_url = os.getenv('API_URL')
+api_url = "http://44.202.124.171:8001/docs#/default/predict_api_v1_predict_post".format(api_url)
+
 
 with open('../data/cultivos.csv', 'r', encoding='utf-8') as file:
     Inputs = pd.read_csv(file)
@@ -23,10 +34,12 @@ grupos_cultivos = Inputs['GRUPO_CULTIVO'].unique().tolist()
 años = Inputs['ANIO'].unique().tolist()
 departamentos = Inputs['NOMBRE_DEPARTAMENTO'].unique().tolist()
 cultivos = Inputs['NOMBRE_CULTIVO'].unique().tolist()
+Clusters = Inputs['NUM_CLUSTERS'].unique()
 
 CantidadCultivos = len(Inputs['NOMBRE_CULTIVO'].unique())
 NumClusters = len(Inputs['NUM_CLUSTERS'].unique())
 valores_unicos = list(range(1, NumClusters + 1))
+
 
 NumMunicipios = len(Inputs['NOMBRE_MUNICIPIO'].unique())
 NumMunicipios_formateado = "{:,}".format(NumMunicipios)
@@ -40,6 +53,9 @@ df_top10 = df.apply(lambda x: x.unique()[:10])
 with open('./img/Logo.png', 'rb') as f:
     logo_data = f.read()
 encoded_logo = base64.b64encode(logo_data).decode()
+
+
+
 
 app.layout = html.Div([
 # Contenedor header
@@ -77,8 +93,8 @@ html.H6("Grupo de Cultivo"),
 html.H6("Número de Cluster"),
      dcc.Dropdown(
         id="dropdown-numero-cluster",
-        options=[{'label': str(cluster), 'value': cluster} for cluster in valores_unicos],
-        value=valores_unicos[0],
+        options=[],
+        value=None,
         searchable=True  # Habilitar la opción de búsqueda
     ),
 
@@ -117,6 +133,7 @@ html.Div([
         html.Div(f"{CantidadCultivos}", className="card-valor", 
                  style={'backgroundColor': 'rgba(0,0,0,0)', 'color': '#2cfec1', 'textAlign': 'center','fontSize': '30px'}
                  ),
+        html.H6(html.Div(id='resultado')),         
     ], className="card"),           
 
     html.Div([
@@ -203,13 +220,17 @@ def update_municipios(municipios):
     Output("dropdown-numero-cluster", "options"),
     [Input("dropdown-grupo-cultivo", "value")]
 )
-def update_municipios(cluster):
+def update_municipios(grupos_cultivos):
     # Filtra los municipios basados en el departamento seleccionado
-    cluster = Inputs[Inputs['GRUPO_CULTIVO'] == grupos_cultivos]['GRUPO_CULTIVO'].unique()
-    options = [{'label': grupo, 'value': grupo} for grupo in grupos_cultivos]
+    grupos_cultivos = Inputs[Inputs['GRUPO_CULTIVO'] == grupos_cultivos]['NUM_CLUSTERS'].unique()
+    options = [{'label': str(cluster), 'value': cluster} for cluster in Clusters]
     
     return options
 
+##LLammado boton 
+from dash.exceptions import PreventUpdate
+
+# ...
 
 #Llamado a la base de card 1
 
@@ -277,5 +298,44 @@ def update_line_chart(grupo_cultivo, año, municipio, departamento, cultivo,valo
     #fig.update_traces(line_color='#2cfec1')
 
     return fig
+
+
+
+# Method to update prediction
+@app.callback(
+    Output(component_id='resultado', component_property='children'),
+    [Input("dropdown-grupo-cultivo", "value"),
+     Input("dropdown-año", "value"),
+     Input("dropdown-municipio", "value"),
+     Input("dropdown-departamento", "value"),
+     Input("dropdown-numero-cluster", "value"),
+     Input("dropdown-cultivo", "value")]
+)
+def update_output_div(cultivo, anio, cluster):
+    myreq = {
+        "inputs": [
+            {
+            "NOMBRE_CULTIVO": str(cultivo),
+            "ANIO": anio,
+            "NUM_CLUSTERS": cluster
+            }
+        ]
+      }
+   
+    myreq
+    headers =  {"Content-Type":"application/json", "accept": "application/json"}
+
+    # POST call to the API
+    response = requests.post(api_url, data=json.dumps(myreq), headers=headers)
+    data = response.json()
+    logger.info("Response: {}".format(data))
+
+    # Pick result to return from json format
+    result = data
+    
+    return result 
+
+
 if __name__ == '__main__':
+    logger.info("Running dash")
     app.run_server(debug=True,host= '0.0.0.0', port=8060)
