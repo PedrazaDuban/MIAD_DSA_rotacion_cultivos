@@ -39,6 +39,7 @@ def validate_inputs(*, input_data: pd.DataFrame) -> Tuple[pd.DataFrame, Optional
 
 
 class DataInputSchema(BaseModel):
+    RENDIMIENTO_TONELADAS_HA: Optional[float]
     ANIO: Optional[int]
     NUM_CLUSTERS: Optional[int]
     NUM_CLUSTERS: Optional[str]
