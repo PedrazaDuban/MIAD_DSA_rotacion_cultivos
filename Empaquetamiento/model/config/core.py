@@ -44,7 +44,7 @@ class ModelConfig(BaseModel):
     temp_features: List[str]
     qual_vars: List[str]
     categorical_vars: Sequence[str]
-    qual_mappings: Dict[str, int]
+    #qual_mappings: Dict[str, int]
 
 
 class Config(BaseModel):
