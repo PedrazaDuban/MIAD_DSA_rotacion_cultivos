@@ -59,6 +59,8 @@ qual_vars:
  
 # 
 categorical_vars:
+  - NOMBRE_DEPARTAMENTO
+  - NOMBRE_CULTIVO
 
 
 # mapeo de variables
