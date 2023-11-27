@@ -1,7 +1,0 @@
-setup.py
-data/__init__.py
-modelo_rendimiento_cultivos.egg-info/PKG-INFO
-modelo_rendimiento_cultivos.egg-info/SOURCES.txt
-modelo_rendimiento_cultivos.egg-info/dependency_links.txt
-modelo_rendimiento_cultivos.egg-info/requires.txt
-modelo_rendimiento_cultivos.egg-info/top_level.txt
