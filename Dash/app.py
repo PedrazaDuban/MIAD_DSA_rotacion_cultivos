@@ -27,7 +27,7 @@ cultivos = Inputs['NOMBRE_CULTIVO'].unique().tolist()
 CantidadCultivos = len(Inputs['NOMBRE_CULTIVO'].unique())
 NumClusters = len(Inputs['NUM_CLUSTERS'].unique())
 NumMunicipios = len(Inputs['NOMBRE_MUNICIPIO'].unique())
-NumMunicipios_formateado = "{:,}".format(NumMunicipios)
+NumMunicipios_formateado = "{:.}".format(NumMunicipios)
 
 # Datos de ejemplo
 
