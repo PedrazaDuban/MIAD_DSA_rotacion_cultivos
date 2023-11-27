@@ -38,10 +38,10 @@ class ModelConfig(BaseModel):
     random_state: int
     n_estimators: int
     max_depth: int
-    temp_features: List[str]
-    min_samples_split: int
     learning_rate: float
-    loss: [str]
+    loss: str
+    min_samples_split: int
+    temp_features: List[str]
     qual_vars: List[str]
     categorical_vars: Sequence[str]
     qual_mappings: Dict[str, int]
