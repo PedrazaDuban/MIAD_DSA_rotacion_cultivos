@@ -42,7 +42,7 @@ pipeline_save_file: model-recomendar-cultivo-output
 test_size: 0.25
 
 # semilla
-random_state: 42
+random_state: 13
 
 # hiperparámetros del modelo 
 # Configuración para el modelo de regresión de aumento de gradiente

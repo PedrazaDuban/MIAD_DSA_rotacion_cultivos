@@ -22,8 +22,6 @@ def run_training() -> None:
         data[config.model_config.features],  # predictors
         data[config.model_config.target],
         test_size=config.model_config.test_size,
-        # we are setting the random seed here
-        # for reproducibility
         random_state=config.model_config.random_state,
     )
     #y_train = np.log(y_train)
