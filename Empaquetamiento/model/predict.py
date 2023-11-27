@@ -33,10 +33,11 @@ def make_prediction(
         predictions = _cultivo_recomendado_pipe.predict(
             X=validated_data[['ANIO','NOMBRE_CULTIVO', 'NUM_CLUSTERS']]
         )
-        results = {
-            "predictions": [pred for pred in predictions], 
-            "version": _version,
-            "errors": errors,
-        }
 
+        #results = {
+        #    "predictions": [pred for pred in predictions], 
+        #    "version": _version,
+        #    "errors": errors,
+        #}
+        results["predictions"] = [pred for pred in predictions]
     return results
