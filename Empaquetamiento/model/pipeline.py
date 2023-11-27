@@ -31,11 +31,11 @@ cultivo_recomendado_pipe = Pipeline(
         # Random forest 
         ("GradientBoostingRegressor",
             ensemble.GradientBoostingRegressor(
-                n_estimators = config.model_config['n_estimators']
-                max_depth = config.model_config['max_depth']
-                min_samples_split = config.model_config['min_samples_split']
-                learning_rate = config.model_config['learning_rate']
-                loss = config.model_config['loss']
+                n_estimators = config.model_config.n_estimators,
+                max_depth = config.model_config.max_depth,                 
+                min_samples_split = config.model_config.min_samples_split,
+                learning_rate = config.model_config.learning_rate,
+                loss=config.model_config.loss,
             ),
         ),
     ]
