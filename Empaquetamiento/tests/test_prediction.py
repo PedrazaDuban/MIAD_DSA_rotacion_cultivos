@@ -15,7 +15,7 @@ def test_make_prediction(sample_input_data):
     # Then
     predictions = result.get("predictions")
     assert isinstance(predictions, list)
-    print(predictions[0])
+    #print(predictions[0])
     assert isinstance(predictions[0], numpy.floating)#
     assert result.get("errors") is None
     assert len(predictions) >= expected_no_predictions
