@@ -21,8 +21,8 @@ def run_training() -> None:
     X_train, X_test, y_train, y_test = train_test_split(
     data[['ANIO','NOMBRE_CULTIVO', 'NUM_CLUSTERS']],  # predictors
     data['RENDIMIENTO_TONELADAS_HA'],
-    test_size=config.model_config['test_size'],
-    random_state=config.model_config['random_state'],
+    test_size=0.25,
+    random_state=13,
 )
     #y_train = np.log(y_train)
     y_train = y_train.map(config.model_config.qual_mappings)
