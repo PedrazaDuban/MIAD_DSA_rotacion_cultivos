@@ -20,8 +20,7 @@ def run_training() -> None:
         # for reproducibility
         random_state=config.model_config.random_state,
     )
-    #y_train = np.log(y_train)
-    y_train = y_train.map(config.model_config.qual_mappings)
+     
 
     # fit model
     abandono_pipe.fit(X_train, y_train)

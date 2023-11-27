@@ -8,20 +8,20 @@ from model.processing import features as pp
 
 abandono_pipe = Pipeline(
     [
-       # Drop features 
-        #("drop_features", 
-        # DropFeatures(
-        #     features_to_drop=[config.model_config.temp_features]
-        #     )
-        #),
+       #Drop features 
+        ("drop_features", 
+         DropFeatures(
+             features_to_drop=[config.model_config.temp_features]
+             )
+        ),
         # Mappers
-        #(
-        #   "mapper_qual",
-        #    pp.Mapper(
-        #        variables=config.model_config.qual_vars,
-        #        mappings=config.model_config.qual_mappings,
-        #    ),
-        #),
+        (
+           "mapper_qual",
+            pp.Mapper(
+                variables=config.model_config.qual_vars,
+                mappings=config.model_config.qual_mappings,
+            ),
+        ),
         # Scaler
         ("scaler", MinMaxScaler()
          ),
