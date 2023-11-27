@@ -51,6 +51,7 @@ n_estimators: 500
 max_depth: 4
 min_samples_split: 5
 learning_rate: 0.01
+loss: 'squared_error'
 
 # variables a mapear
 qual_vars:
@@ -64,7 +65,7 @@ categorical_vars:
 
 
 # mapeo de variables
-#qual_mappings:
-#  Attrited Customer: 1
-#0 Existing Customer: 
+qual_mappings:
+
+
 
