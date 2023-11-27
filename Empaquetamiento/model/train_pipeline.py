@@ -25,7 +25,7 @@ def run_training() -> None:
     random_state=13,
 )
     #y_train = np.log(y_train)
-    y_train = y_train.map(config.model_config.qual_mappings)
+    #y_train = y_train.map(config.model_config.qual_mappings)
 
     # fit model
     cultivo_recomendado_pipe.fit(X_train, y_train)
