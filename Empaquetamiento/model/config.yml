@@ -45,8 +45,6 @@ test_size: 0.25
 random_state: 13
 
 # hiperparámetros del modelo 
-# Configuración para el modelo de regresión de aumento de gradiente
-
 n_estimators: 500
 max_depth: 4
 min_samples_split: 5
