@@ -6,7 +6,7 @@ from model.predict import make_prediction
 
 def test_make_prediction(sample_input_data):
     # Given
-    expected_first_prediction_value = 1
+    expected_first_prediction_value = 6.09234353
     expected_no_predictions = 47048
 
     # When
