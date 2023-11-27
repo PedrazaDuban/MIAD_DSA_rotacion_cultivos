@@ -19,8 +19,8 @@ def run_training() -> None:
     
     # divide train and test
     X_train, X_test, y_train, y_test = train_test_split(
-    data[config.model_config['features']],  # predictors
-    data[config.model_config['target']],
+    data[['ANIO','NOMBRE_CULTIVO', 'NUM_CLUSTERS']],  # predictors
+    data['RENDIMIENTO_TONELADAS_HA'],
     test_size=config.model_config['test_size'],
     random_state=config.model_config['random_state'],
 )
