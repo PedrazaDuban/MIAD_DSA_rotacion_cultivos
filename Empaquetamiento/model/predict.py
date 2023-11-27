@@ -31,7 +31,7 @@ def make_prediction(
         validated_data[categorical_cols] = validated_data[categorical_cols].apply(lambda col: le.fit_transform(col))
         
         predictions = _cultivo_recomendado_pipe.predict(
-            X=validated_data[config.model_config.features]
+            X=validated_data[['ANIO','NOMBRE_CULTIVO', 'NUM_CLUSTERS']]
         )
         results = {
             "predictions": [pred for pred in predictions], 
