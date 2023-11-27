@@ -18,25 +18,24 @@ class MultipleDataInputs(BaseModel):
             "example": {
                 "inputs": [
                     {
-                        "Customer_Age": 57,
-                        "Gender": "M",
-                        "Dependent_count": 4,
-                        "Education_Level": "Graduate",
-                        "Marital_Status": "Single",
-                        "Income_Category": "$120K +",
-                        "Card_Category": "Blue",
-                        "Months_on_book":52,
-                        "Total_Relationship_Count":2,
-                        "Months_Inactive_12_mon":3,
-                        "Contacts_Count_12_mon":2,
-                        "Credit_Limit":25808,
-                        "Total_Revolving_Bal":0,
-                        "Avg_Open_To_Buy":25808,
-                        "Total_Amt_Chng_Q4_Q1":0.712,
-                        "Total_Trans_Amt":7794,
-                        "Total_Trans_Ct":94,
-                        "Total_Ct_Chng_Q4_Q1":0.843,
-                        "Avg_Utilization_Ratio": 0
+                        "CODIGO_DEPARTAMENTO": 73,
+                        "NOMBRE_DEPARTAMENTO": "TOLIMA",
+                        "CODIGO_MUNICIPIO": 73226,
+                        "NOMBRE_MUNICIPIO": "CUNDAY",
+                        "GRUPO_CULTIVO": "FRUTALES",
+                        "SUBGRUPO_CULTIVO": "MORA",
+                        "NOMBRE_CULTIVO": "MORA",
+                        "REGION_SISTEMA": "MORA", 
+                        "ANIO": 2009,
+                        "PERIODO": 2009,
+                        "AREA_SIEMBRA_HA": 5.0,
+                        "AREA_COSECHA_HA": 5,
+                        "PRODUCCION_TONELADAS": 10,
+                        "RENDIMIENTO_TONELADAS_HA": 2.0,
+                        "ESTADO_PRODUCCION": "FRUTO FRESCO",
+                        "NOMBRE_CIENTIFICO": "RUBUS GLAUCUS",
+                        "CICLO_CULTIVO": "PERMANENTE",
+                        "NUM_CLUSTERS": 3.0
                     }
                 ]
             }
