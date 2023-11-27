@@ -21,23 +21,21 @@ def make_prediction(
 
     data = pd.DataFrame(input_data)
     validated_data, errors = validate_inputs(input_data=data)
-    results = {"predictions": None, "version": _version, "errors": errors}
+    results = {"predictions": [], "version": _version, "errors": errors}
 
     if not errors:
-        # Create arrary of categorial variables to be encoded
-        categorical_cols = ['NOMBRE_CULTIVO']
-        le = LabelEncoder()
-        # apply label encoder on categorical feature columns
-        validated_data[categorical_cols] = validated_data[categorical_cols].apply(lambda col: le.fit_transform(col))
-        
-        predictions = _cultivo_recomendado_pipe.predict(
-            X=validated_data[['ANIO','NOMBRE_CULTIVO', 'NUM_CLUSTERS']]
-        )
+        try:
+            # Create array of categorical variables to be encoded
+            categorical_cols = ['NOMBRE_CULTIVO']
+            le = LabelEncoder()
+            # apply label encoder on categorical feature columns
+            validated_data[categorical_cols] = validated_data[categorical_cols].apply(lambda col: le.fit_transform(col))
+            
+            predictions = _cultivo_recomendado_pipe.predict(
+                X=validated_data[['ANIO','NOMBRE_CULTIVO', 'NUM_CLUSTERS']]
+            )
+            results["predictions"] = [pred for pred in predictions]
+        except Exception as e:
+            results["errors"] = f"An error occurred while making predictions: {str(e)}"
 
-        results = {
-            "predictions": [pred for pred in predictions], 
-            "version": _version,
-            "errors": errors,
-        }
-        
     return results
