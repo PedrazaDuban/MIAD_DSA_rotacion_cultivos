@@ -23,7 +23,7 @@ def drop_na_inputs(*, input_data: pd.DataFrame) -> pd.DataFrame:
 def validate_inputs(*, input_data: pd.DataFrame) -> Tuple[pd.DataFrame, Optional[dict]]:
     """Check model inputs for unprocessable values."""
 
-    relevant_data = input_data[config.model_config.features].copy()
+    relevant_data = input_data[['ANIO','NOMBRE_CULTIVO', 'NUM_CLUSTERS']].copy()
     validated_data = drop_na_inputs(input_data=relevant_data)
     errors = None
 
