@@ -8,7 +8,7 @@ from sklearn.preprocessing import LabelEncoder
 from model.config.core import config
 from model.processing import features as pp
 
-abandono_pipe = Pipeline(
+cultivo_recomendado_pipe = Pipeline(
     [
         # Drop features 
         #("drop_features", 
