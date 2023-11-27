@@ -39,7 +39,7 @@ def validate_inputs(*, input_data: pd.DataFrame) -> Tuple[pd.DataFrame, Optional
 
 
 class DataInputSchema(BaseModel):
-    NOMBRE_CULTIVO: Optional[str]
+    NOMBRE_CULTIVO: Optional[int]
     ANIO: Optional[int]
     NUM_CLUSTERS: Optional[float]
 

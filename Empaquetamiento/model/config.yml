@@ -53,6 +53,7 @@ min_samples_split: 5
 learning_rate: 0.01
 loss: 'squared_error'
 
+
 # variables a mapear
 qual_vars:
   - NOMBRE_DEPARTAMENTO
