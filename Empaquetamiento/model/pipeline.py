@@ -8,6 +8,7 @@ from sklearn.preprocessing import LabelEncoder
 from model.config.core import config
 from model.processing import features as pp
 
+
 cultivo_recomendado_pipe = Pipeline(
     [
         # Drop features 
@@ -30,8 +31,8 @@ cultivo_recomendado_pipe = Pipeline(
         # Random forest 
         ("GradientBoostingRegressor",
             ensemble.GradientBoostingRegressor(
-                n_estimators = config.model_config.n_estimators, 
                 max_depth = config.model_config.max_depth,
+                n_estimators = config.model_config.n_estimators, 
                 min_samples_split = config.model_config.min_samples_split,
                 learning_rate = config.model_config.learning_rate,
                 random_state=config.model_config.random_state,
