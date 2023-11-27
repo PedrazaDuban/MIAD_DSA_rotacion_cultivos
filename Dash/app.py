@@ -25,9 +25,8 @@ departamentos = Inputs['NOMBRE_DEPARTAMENTO'].unique().tolist()
 cultivos = Inputs['NOMBRE_CULTIVO'].unique().tolist()
 
 CantidadCultivos = len(Inputs['NOMBRE_CULTIVO'].unique())
-
-#AreaSembrada = Inputs["Área Sembrada(ha)"].sum()
-#AreaCosechada = Inputs["Área Cosechada(ha)"].sum()
+NumClusters = len(Inputs['NUM_CLUSTERS'].unique())
+AreaCosechada = Inputs["Área Cosechada(ha)"].sum()
 
 # Datos de ejemplo
 
@@ -107,15 +106,15 @@ html.Div([
     ], className="card"),           
 
     html.Div([
-        html.Div("Área Sembrada", className="card-titdle"),
-        html.Div(f"{CantidadCultivos}", className="card-valor", 
+        html.Div("Número de Clusters", className="card-titdle"),
+        html.Div(f"{NumClusters}", className="card-valor", 
                  style={'backgroundColor': 'rgba(0,0,0,0)', 'color': '#2cfec1', 'textAlign': 'center','fontSize': '30px'}
                  ),
     ], className="card"),
 
     html.Div([
         html.Div("Área Cosechada", className="card-title"),
-        html.Div(f"{CantidadCultivos}", className="card-valor", 
+        html.Div(f"{AreaCosechada}", className="card-valor", 
                  style={'backgroundColor': 'rgba(0,0,0,0)', 'color': '#2cfec1', 'textAlign': 'center','fontSize': '30px'}
                  ),
     ], className="card"),# Contenedor cards
