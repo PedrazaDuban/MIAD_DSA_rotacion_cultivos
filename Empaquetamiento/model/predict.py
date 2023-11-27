@@ -7,6 +7,7 @@ from model import __version__ as _version
 from model.config.core import config
 from model.processing.data_manager import load_pipeline
 from model.processing.validation import validate_inputs
+from sklearn.preprocessing import LabelEncoder
 
 pipeline_file_name = f"{config.app_config.pipeline_save_file}{_version}.pkl"
 _cultivo_recomendado_pipe = load_pipeline(file_name=pipeline_file_name)
