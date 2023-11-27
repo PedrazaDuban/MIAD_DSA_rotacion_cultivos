@@ -12,7 +12,7 @@ def drop_na_inputs(*, input_data: pd.DataFrame) -> pd.DataFrame:
     validated_data = input_data.copy()
     new_vars_with_na = [
         var
-        for var in config.model_config.features
+        for var in ['ANIO','NOMBRE_CULTIVO', 'NUM_CLUSTERS']
         if validated_data[var].isnull().sum() > 0
     ]
     validated_data.dropna(subset=new_vars_with_na, inplace=True)
