@@ -26,12 +26,14 @@ cultivos = Inputs['NOMBRE_CULTIVO'].unique().tolist()
 
 CantidadCultivos = len(Inputs['NOMBRE_CULTIVO'].unique())
 NumClusters = len(Inputs['NUM_CLUSTERS'].unique())
+valores_unicos = list(range(1, NumClusters + 1))
+
 NumMunicipios = len(Inputs['NOMBRE_MUNICIPIO'].unique())
 NumMunicipios_formateado = "{:,}".format(NumMunicipios)
 
 # Datos de ejemplo Tabla
 
-df = pd.DataFrame(Inputs, columns=['NOMBRE_CULTIVO','NUM_CLUSTERS', 'RENDIMIENTO_TONELADAS_HA'])
+df = pd.DataFrame(Inputs, columns=['GRUPO_CULTIVO','NOMBRE_CULTIVO','NUM_CLUSTERS', 'RENDIMIENTO_TONELADAS_HA'])
 df_top10 = df.apply(lambda x: x.unique()[:10])
 
                                                                                                                 
@@ -51,56 +53,56 @@ html.Div([
 # Contenedor fILTROS
 html.Div([
 html.H6("Departamento"),
-dcc.Dropdown(
-id="dropdown-departamento",
-options=[{'label': departamento, 'value': departamento} for departamento in departamentos],
-value=departamentos[0],
-searchable=True  # Habilitar la opción de búsqueda
-),
+    dcc.Dropdown(
+        id="dropdown-departamento",
+        options=[{'label': departamento, 'value': departamento} for departamento in departamentos],
+        value=departamentos[0],
+        searchable=True  # Habilitar la opción de búsqueda
+    ),
 html.H6("Municipio"),
-dcc.Dropdown(
-id="dropdown-municipio",
-# Aquí dejamos las opciones vacías por ahora, se llenarán con la actualización
-options=[],
-value=None,
-searchable=True  # Habilitar la opción de búsqueda
-),
+    dcc.Dropdown(
+        id="dropdown-municipio",
+        # Aquí dejamos las opciones vacías por ahora, se llenarán con la actualización
+        options=[],
+        value=None,
+        searchable=True  # Habilitar la opción de búsqueda
+    ),
 html.H6("Grupo de Cultivo"),
-dcc.Dropdown(
-id="dropdown-grupo-cultivo",
-options=[{'label': grupo, 'value': grupo} for grupo in grupos_cultivos],
-value=grupos_cultivos[0],
-searchable=True  # Habilitar la opción de búsqueda
-),
+    dcc.Dropdown(
+        id="dropdown-grupo-cultivo",
+        options=[],
+        value=None,
+        searchable=True  # Habilitar la opción de búsqueda
+    ),
 html.H6("Número de Cluster"),
-dcc.Dropdown(
-id="dropdown-numero-culster",
-options=[{'label': grupo, 'value': grupo} for grupo in grupos_cultivos],
-value=grupos_cultivos[0],
-searchable=True  # Habilitar la opción de búsqueda
-),
+     dcc.Dropdown(
+        id="dropdown-numero-cluster",
+        options=[{'label': str(cluster), 'value': cluster} for cluster in valores_unicos],
+        value=valores_unicos[0],
+        searchable=True  # Habilitar la opción de búsqueda
+    ),
 
 html.H6("Año"),
-dcc.Dropdown(
-id="dropdown-año",
-options=[{'label': str(año), 'value': año} for año in años],
-value=años[0],
-searchable=True  # Habilitar la opción de búsqueda
-),
+    dcc.Dropdown(
+        id="dropdown-año",
+        options=[{'label': str(año), 'value': año} for año in años],
+        value=años[0],
+        searchable=True  # Habilitar la opción de búsqueda
+    ),
 
 html.H6("Cultivo"),
-dcc.Dropdown(
-id="dropdown-cultivo",
-options=[{'label': cultivo, 'value': cultivo} for cultivo in cultivos],
-value=cultivos[0],
-searchable=True  # Habilitar la opción de búsqueda
-),
+    dcc.Dropdown(
+        id="dropdown-cultivo",
+        options=[{'label': cultivo, 'value': cultivo} for cultivo in cultivos],
+        value=cultivos[0],
+        searchable=True  # Habilitar la opción de búsqueda
+    ),
 
 html.Button("Enviar Consulta",
-id="enviar-button",
-n_clicks=0,
-style={'color': 'white'}
-)
+    id="enviar-button",
+    n_clicks=0,
+    style={'color': 'white'}
+    )
 
 ], className="left-container"),  # Contenedor izquierdo
 
@@ -156,9 +158,9 @@ html.Div([
 # Contenedor de la tabla
 
 html.Div([
-html.H4('Rendimiento en Toneladas por Hectarea', className="title-visualizacion"),
-dcc.Graph(id="line-chart", className="line-chart"),
-], className="line-chart-container"),
+    html.H4('Rendimiento en Toneladas por Hectarea', className="title-visualizacion"),
+        dcc.Graph(id="line-chart", className="line-chart"),
+    ], className="line-chart-container"),
 
 
 ], className="cards-container"), # Contenedor de las cards y la tabla
@@ -183,6 +185,29 @@ def update_municipios(departamento):
     # Filtra los municipios basados en el departamento seleccionado
     municipios = Inputs[Inputs['NOMBRE_DEPARTAMENTO'] == departamento]['NOMBRE_MUNICIPIO'].unique()
     options = [{'label': municipio, 'value': municipio} for municipio in municipios]
+    return options
+
+#Llamado a la base de datosropdown grupocultivo
+@app.callback(
+    Output("dropdown-grupo-cultivo", "options"),
+    [Input("dropdown-municipio", "value")]
+)
+def update_municipios(municipios):
+    # Filtra los municipios basados en el departamento seleccionado
+    grupos_cultivos = Inputs[Inputs['NOMBRE_MUNICIPIO'] == municipios]['GRUPO_CULTIVO'].unique()
+    options = [{'label': grupo, 'value': grupo} for grupo in grupos_cultivos]
+    return options
+
+#Llamado a la base de datosropdown cluster
+@app.callback(
+    Output("dropdown-numero-cluster", "options"),
+    [Input("dropdown-grupo-cultivo", "value")]
+)
+def update_municipios(cluster):
+    # Filtra los municipios basados en el departamento seleccionado
+    cluster = Inputs[Inputs['GRUPO_CULTIVO'] == grupos_cultivos]['GRUPO_CULTIVO'].unique()
+    options = [{'label': grupo, 'value': grupo} for grupo in grupos_cultivos]
+    
     return options
 
 
@@ -224,17 +249,15 @@ def display_choropleth(candidate):
 
 )
 
-
-#
-def update_line_chart(grupo_cultivo, año, municipio, departamento, cultivo,num_cluster):
+def update_line_chart(grupo_cultivo, año, municipio, departamento, cultivo,valores_unicos):
     # Filtra los datos basados en las selecciones
     filtered_data = Inputs[
         (Inputs['GRUPO_CULTIVO'] == grupo_cultivo) &
         (Inputs['ANIO'] == año) &
         (Inputs['NOMBRE_DEPARTAMENTO'] == departamento) &
         (Inputs['NOMBRE_MUNICIPIO'] == municipio) &
-        (Inputs['NOMBRE_CULTIVO'] == cultivo) &
-        (Inputs['NUM_CLUSTERS'] == num_cluster)
+        (Inputs['NUM_CLUSTERS'] == valores_unicos)&
+        (Inputs['NOMBRE_CULTIVO'] == cultivo)
     ]
     x_values = [1, 2, 3, 4, 5]
     y_values = [10, 8, 12, 6, 9]
