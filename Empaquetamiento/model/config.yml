@@ -5,11 +5,10 @@ package_name: model-recomendar-cultivo
 train_data_file: cultivos_train.csv
 test_data_file: cultivos_test.csv
 
-# Variables
 # Objetivo
 target: RENDIMIENTO_TONELADAS_HA
 
-
+#Variables 
 features:
   - ANIO
   - NOMBRE_CULTIVO
@@ -46,22 +45,26 @@ test_size: 0.25
 random_state: 42
 
 # hiperparámetros del modelo 
+# Configuración para el modelo de regresión de aumento de gradiente
+
 n_estimators: 500
 max_depth: 4
 min_samples_split: 5
 learning_rate: 0.01
+loss: squared_error
+
 
 # variables a mapear
 qual_vars:
-  - RENDIMIENTO_TONELADAS_HA
-
+  - NOMBRE_DEPARTAMENTO
+  - NOMBRE_CULTIVO
+ 
 # 
 categorical_vars:
-  - NOMBRE_CULTIVO
 
 
 # mapeo de variables
 #qual_mappings:
 #  Attrited Customer: 1
-# Existing Customer: 0
+#0 Existing Customer: 
 

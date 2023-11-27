@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Nov 11  2023
-
-@author: Equipo DSA
-"""
-
 # Importe el conjunto de datos de diabetes y divídalo en entrenamiento y prueba usando scikit-learn
 from sklearn.model_selection import train_test_split
 import pandas as pd
@@ -15,21 +7,19 @@ from sklearn.preprocessing import robust_scale
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import LabelEncoder
 
-with open('data/cultivos.csv', 'r', encoding='utf-8') as file:
+with open('./data/cultivos_train.csv', 'r', encoding='utf-8') as file:
     dataset = pd.read_csv(file)
 Y=dataset['RENDIMIENTO_TONELADAS_HA']
 X=dataset[['ANIO','NOMBRE_CULTIVO', 'NUM_CLUSTERS']]
 X = X.replace(',','', regex=True)
 # Create arrary of categorial variables to be encoded
-categorical_cols = ['CULTIVO']
+categorical_cols = ['NOMBRE_CULTIVO']
 le = LabelEncoder()
 # apply label encoder on categorical feature columns
 X[categorical_cols] = X[categorical_cols].apply(lambda col: le.fit_transform(col))
 X_train, X_test, y_train, y_test = train_test_split(
     X, Y, test_size=0.25, random_state=13
 )
-
-
 
 import datetime
 from sklearn.preprocessing import robust_scale

@@ -1,12 +1,14 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='recomendacion-cultivos',
+    name='modelo_rendimiento_cultivos',
     version='0.1',
     packages=find_packages(),
     install_requires=[
         'scikit-learn',
-        'mlflow',
-        # Agrega otras dependencias según sea necesario
+        'pandas',
+        'numpy',
+        'geopandas',
+        # ... otras dependencias ...
     ],
 )

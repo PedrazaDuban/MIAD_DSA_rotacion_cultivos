@@ -1,7 +1,0 @@
-setup.py
-data/__init__.py
-recomendacion_cultivos.egg-info/PKG-INFO
-recomendacion_cultivos.egg-info/SOURCES.txt
-recomendacion_cultivos.egg-info/dependency_links.txt
-recomendacion_cultivos.egg-info/requires.txt
-recomendacion_cultivos.egg-info/top_level.txt

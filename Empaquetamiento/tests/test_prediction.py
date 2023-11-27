@@ -1,5 +1,4 @@
 import math
-
 import numpy 
 
 from model.predict import make_prediction
@@ -8,7 +7,7 @@ from model.predict import make_prediction
 def test_make_prediction(sample_input_data):
     # Given
     expected_first_prediction_value = 0
-    expected_no_predictions = 47049
+    expected_no_predictions = 47048
 
     # When
     result = make_prediction(input_data=sample_input_data)

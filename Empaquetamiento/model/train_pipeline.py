@@ -8,7 +8,7 @@ from sklearn.preprocessing import LabelEncoder
 
 def run_training() -> None:
     """Train the model."""
-
+    
     # read training data
     data = load_dataset(file_name=config.app_config.train_data_file)
     # Create arrary of categorial variables to be encoded
@@ -16,6 +16,10 @@ def run_training() -> None:
     le = LabelEncoder()
     # apply label encoder on categorical feature columns
     data[categorical_cols] = data[categorical_cols].apply(lambda col: le.fit_transform(col))
+
+    # Encode the target variable
+    data[config.model_config.target] = data[config.model_config.target].map(config.model_config.qual_mappings)
+    
     
     # divide train and test
     X_train, X_test, y_train, y_test = train_test_split(
