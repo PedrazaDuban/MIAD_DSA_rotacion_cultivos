@@ -31,7 +31,7 @@ NumMunicipios_formateado = "{:,}".format(NumMunicipios)
 
 # Datos de ejemplo
 
-df = pd.DataFrame(Inputs, columns=[ 'NOMBRE_DEPARTAMENTO', 'NOMBRE_MUNICIPIO','GRUPO_CULTIVO', 'NOMBRE_CULTIVO', 'RENDIMIENTO_TONELADAS_HA']).head(10)
+df = pd.DataFrame(Inputs, columns=['NOMBRE_CULTIVO','NUM_CLUSTERS', 'RENDIMIENTO_TONELADAS_HA']).unique().head(10)
                                                                                                                 
 with open('./img/Logo.png', 'rb') as f:
     logo_data = f.read()
