@@ -27,6 +27,7 @@ cultivos = Inputs['NOMBRE_CULTIVO'].unique().tolist()
 CantidadCultivos = len(Inputs['NOMBRE_CULTIVO'].unique())
 NumClusters = len(Inputs['NUM_CLUSTERS'].unique())
 NumMunicipios = len(Inputs['NOMBRE_MUNICIPIO'].unique())
+NumMunicipios_formateado = "{:,}".format(NumMunicipios)
 
 # Datos de ejemplo
 
@@ -114,7 +115,7 @@ html.Div([
 
     html.Div([
         html.Div("Total de Municipios", className="card-title"),
-        html.Div(f"{NumMunicipios}", className="card-valor", 
+        html.Div(f"{NumMunicipios_formateado}", className="card-valor", 
                  style={'backgroundColor': 'rgba(0,0,0,0)', 'color': '#2cfec1', 'textAlign': 'center','fontSize': '30px'}
                  ),
     ], className="card"),# Contenedor cards
