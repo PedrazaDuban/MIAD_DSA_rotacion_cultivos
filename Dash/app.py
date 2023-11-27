@@ -65,13 +65,6 @@ options=[],
 value=None,
 searchable=True  # Habilitar la opción de búsqueda
 ),
-html.H6("Año"),
-dcc.Dropdown(
-id="dropdown-año",
-options=[{'label': str(año), 'value': año} for año in años],
-value=años[0],
-searchable=True  # Habilitar la opción de búsqueda
-),
 html.H6("Grupo de Cultivo"),
 dcc.Dropdown(
 id="dropdown-grupo-cultivo",
@@ -79,6 +72,22 @@ options=[{'label': grupo, 'value': grupo} for grupo in grupos_cultivos],
 value=grupos_cultivos[0],
 searchable=True  # Habilitar la opción de búsqueda
 ),
+html.H6("Número de Cluster"),
+dcc.Dropdown(
+id="dropdown-numero-culster",
+options=[{'label': grupo, 'value': grupo} for grupo in grupos_cultivos],
+value=grupos_cultivos[0],
+searchable=True  # Habilitar la opción de búsqueda
+),
+
+html.H6("Año"),
+dcc.Dropdown(
+id="dropdown-año",
+options=[{'label': str(año), 'value': año} for año in años],
+value=años[0],
+searchable=True  # Habilitar la opción de búsqueda
+),
+
 html.H6("Cultivo"),
 dcc.Dropdown(
 id="dropdown-cultivo",
@@ -210,19 +219,22 @@ def display_choropleth(candidate):
      Input("dropdown-año", "value"),
      Input("dropdown-municipio", "value"),
      Input("dropdown-departamento", "value"),
+     Input("dropdown-numero-cluster", "value"),
      Input("dropdown-cultivo", "value")]
+
 )
 
 
 #
-def update_line_chart(grupo_cultivo, año, municipio, departamento, cultivo):
+def update_line_chart(grupo_cultivo, año, municipio, departamento, cultivo,num_cluster):
     # Filtra los datos basados en las selecciones
     filtered_data = Inputs[
         (Inputs['GRUPO_CULTIVO'] == grupo_cultivo) &
         (Inputs['ANIO'] == año) &
         (Inputs['NOMBRE_DEPARTAMENTO'] == departamento) &
         (Inputs['NOMBRE_MUNICIPIO'] == municipio) &
-        (Inputs['NOMBRE_CULTIVO'] == cultivo)
+        (Inputs['NOMBRE_CULTIVO'] == cultivo) &
+        (Inputs['NUM_CLUSTERS'] == num_cluster)
     ]
     x_values = [1, 2, 3, 4, 5]
     y_values = [10, 8, 12, 6, 9]
