@@ -34,14 +34,14 @@ class ModelConfig(BaseModel):
 
     target: str
     features: List[str]
+    temp_features: List[str]
     test_size: float
     random_state: int
     n_estimators: int
     max_depth: int
+    min_samples_split: int
     learning_rate: float
     loss: str
-    min_samples_split: int
-    temp_features: List[str]
     qual_vars: List[str]
     categorical_vars: Sequence[str]
     #qual_mappings: Dict[str, int]
