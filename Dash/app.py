@@ -24,7 +24,7 @@ server = app.server
 
 # PREDICTION API URL 
 api_url = os.getenv('API_URL')
-api_url = "http://44.202.124.171:8001/predict_api_v1_predict_post".format(api_url)
+api_url = "http://3.94.52.90/predict_api_v1_predict_post".format(api_url)
 
 
 with open('../data/cultivos.csv', 'r', encoding='utf-8') as file:
@@ -123,7 +123,11 @@ html.Button("Enviar Consulta",
     id="enviar-button",
     n_clicks=0,
     style={'color': 'white'}
-    )
+    ),
+     
+html.Br(),
+    html.H6(html.Div(id='resultado')),
+
 
 ], className="left-container"),  # Contenedor izquierdo
 
@@ -284,14 +288,12 @@ def update_line_chart(grupo_cultivo, año, municipio, departamento, cultivo,valo
 # Method to update prediction
 @app.callback(
     Output(component_id='resultado', component_property='children'),
-    [Input("dropdown-grupo-cultivo", "value"),
-     Input("dropdown-año", "value"),
-     Input("dropdown-municipio", "value"),
-     Input("dropdown-departamento", "value"),
-     Input("dropdown-numero-cluster", "value"),
-     Input("dropdown-cultivo", "value")]
+    [Input(component_id='dropdown-cultivo', component_property='value'), 
+     Input(component_id='dropdown-año', component_property='value'), 
+     Input(component_id='dropdown-numero-cluster', component_property='value')]
 )
 def update_output_div(cultivo, anio, cluster):
+    print(f"cultivo: {cultivo}, anio: {anio}, cluster: {cluster}")
     myreq = {
         "inputs": [
             {
@@ -301,20 +303,23 @@ def update_output_div(cultivo, anio, cluster):
             }
         ]
       }
+    print(f"Contenido de myreq: {myreq}")
    
     headers =  {"Content-Type":"application/json", "accept": "application/json"}
-
+    #print(f"Contenido de myreq: {headers}")
     # POST call to the API
     response = requests.post(api_url, data=json.dumps(myreq), headers=headers)
     data = response.json()
     logger.info("Response: {}".format(data))
+    # Imprimir la respuesta completa del API
+    print(f"Respuesta completa del API: {data}")
 
     # Pick result to return from json format
-    result = data
+    result = data["predictions"][0]
     
     return result
 
 
 if __name__ == '__main__':
-    logger.info("Running dash")
+    #logger.info("Running dash")
     app.run_server(debug=True,host= '0.0.0.0', port=8060)
