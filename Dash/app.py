@@ -24,7 +24,7 @@ server = app.server
 
 # PREDICTION API URL 
 api_url = os.getenv('API_URL')
-api_url = "http://3.94.52.90/predict_api_v1_predict_post".format(api_url)
+api_url = "http://3.94.52.90:8001/api/v1/predict".format(api_url)
 
 
 with open('../data/cultivos.csv', 'r', encoding='utf-8') as file:
@@ -142,7 +142,7 @@ html.Div([
         html.Div(f"{CantidadCultivos}", className="card-valor", 
                  style={'backgroundColor': 'rgba(0,0,0,0)', 'color': '#2cfec1', 'textAlign': 'center','fontSize': '30px'}
                  ),
-        html.H6(html.Div(id='resultado')),         
+                 
     ], className="card"),           
 
     html.Div([
@@ -176,7 +176,10 @@ html.Div([
 # Contenedor de la tabla
 
 html.Div([
-    html.H4('Rendimiento en Toneladas por Hectarea', className="title-visualizacion"),
+    html.H4('Predicción del Rendimiento en Toneladas por Hectarea', className="title-visualizacion"),
+    html.Div(id='resultado', className="card-valor", 
+                 style={'backgroundColor': 'rgba(0,0,0,0)', 'color': '#2cfec1', 'textAlign': 'center','fontSize': '50px'}
+                 ),
         dcc.Graph(id="line-chart", className="line-chart"),
     ], className="line-chart-container"),
 
