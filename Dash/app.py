@@ -42,10 +42,12 @@ Clusters = Inputs['NUM_CLUSTERS'].unique()
 CantidadCultivos = len(Inputs['NOMBRE_CULTIVO'].unique())
 NumClusters = len(Inputs['NUM_CLUSTERS'].unique())
 valores_unicos = list(range(1, NumClusters + 1))
+Toneladas = Inputs['RENDIMIENTO_TONELADAS_HA']
 
 
 NumMunicipios = len(Inputs['NOMBRE_MUNICIPIO'].unique())
 NumMunicipios_formateado = "{:,}".format(NumMunicipios)
+
 
 # Datos de ejemplo Tabla
 
@@ -125,9 +127,6 @@ html.Button("Enviar Consulta",
     style={'color': 'white'}
     ),
      
-html.Br(),
-    html.H6(html.Div(id='resultado')),
-
 
 ], className="left-container"),  # Contenedor izquierdo
 
@@ -259,16 +258,15 @@ from dash.exceptions import PreventUpdate
 
 def update_line_chart(grupo_cultivo, año, municipio, departamento, cultivo,valores_unicos):
     # Filtra los datos basados en las selecciones
+    # Filtra los datos basados en las selecciones
     filtered_data = Inputs[
-        (Inputs['GRUPO_CULTIVO'] == grupo_cultivo) &
-        (Inputs['ANIO'] == año) &
-        (Inputs['NOMBRE_DEPARTAMENTO'] == departamento) &
-        (Inputs['NOMBRE_MUNICIPIO'] == municipio) &
-        (Inputs['NUM_CLUSTERS'] == valores_unicos)&
-        (Inputs['NOMBRE_CULTIVO'] == cultivo)
+        (Inputs['RENDIMIENTO_TONELADAS_HA'] == Toneladas) &
+        (Inputs['ANIO'] == año)
     ]
-    x_values = [1, 2, 3, 4, 5]
-    y_values = [10, 8, 12, 6, 9]
+
+    # Asigna los valores de x y y basados en los datos filtrados
+    x_values = filtered_data['ANIO'].tolist()
+    y_values = filtered_data['RENDIMIENTO_TONELADAS_HA'].tolist()
     #x_values = filtered_data['FECHA']  # Reemplaza 'FECHA' con tu columna de fechas
     #y_values = filtered_data['RENDIMIENTO_TONELADAS_HA']  # Reemplaza con tus rendimientos
 
@@ -277,7 +275,7 @@ def update_line_chart(grupo_cultivo, año, municipio, departamento, cultivo,valo
     fig.update_layout(paper_bgcolor='rgba(0,0,0,0)', 
                       plot_bgcolor='rgba(0,0,0,0)', 
                       font_color="#2cfec1",
-                      font_size=14,
+                      font_size=25,
                       xaxis_title="Fecha",
                       yaxis_title="Predición de Cultivo")
     fig.update_xaxes(showgrid=True, gridwidth=0.25, gridcolor='#7C7C7C')
