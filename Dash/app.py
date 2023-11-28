@@ -14,6 +14,7 @@ import requests
 import os
 import json
 from loguru import logger
+import matplotlib as plt
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
@@ -23,11 +24,13 @@ server = app.server
 
 # PREDICTION API URL 
 api_url = os.getenv('API_URL')
-api_url = "http://44.202.124.171:8001/docs#/default/predict_api_v1_predict_post".format(api_url)
+api_url = "http://44.202.124.171:8001/predict_api_v1_predict_post".format(api_url)
 
 
 with open('../data/cultivos.csv', 'r', encoding='utf-8') as file:
     Inputs = pd.read_csv(file)
+
+municipios_mapa=gpd.read_file('../data/MunicipiosVeredas19MB.json')
 
 
 grupos_cultivos = Inputs['GRUPO_CULTIVO'].unique().tolist()
@@ -49,12 +52,14 @@ NumMunicipios_formateado = "{:,}".format(NumMunicipios)
 df = pd.DataFrame(Inputs, columns=['GRUPO_CULTIVO','NOMBRE_CULTIVO','NUM_CLUSTERS', 'RENDIMIENTO_TONELADAS_HA'])
 df_top10 = df.apply(lambda x: x.unique()[:10])
 
-                                                                                                                
+#########################DASH##########################                                                                                                                
 with open('./img/Logo.png', 'rb') as f:
     logo_data = f.read()
 encoded_logo = base64.b64encode(logo_data).decode()
 
-
+with open('./img/mapa.png', 'rb') as f:
+    mapa_data = f.read()
+encoded_mapa = base64.b64encode(mapa_data).decode()
 
 
 app.layout = html.Div([
@@ -161,15 +166,7 @@ html.Div([
 # Contenedor de la visualización del mapa
 html.Div([
     html.H4('Grupo de Cultivos con Municipicos Similares', className="title-visualizacion"),
-    dcc.RadioItems(
-            id='candidate',
-            options=["Joly", "Coderre", "Bergeron"],
-            value="Coderre",
-            inline=True
-        ),
-    dcc.Graph(id="mapa", className="mapa-graph",
-              style={'backgroundColor': 'rgba(0,0,0,0)'}
-              ), 
+    html.Img(src=f"data:image/png;base64,{encoded_mapa}"),
  
 ],className="mapa-container"),
 # Contenedor de la tabla
@@ -239,23 +236,6 @@ from dash.exceptions import PreventUpdate
 
 ##mapa #https://plotly.com/python/maps/
 
-@app.callback(
-    Output("mapa", "figure"), 
-    Input("candidate", "value"))
-
-
-def display_choropleth(candidate):
-    df = px.data.election() # replace with your own data source
-    geojson = px.data.election_geojson()
-    map = px.choropleth(
-        df, geojson=geojson, color=candidate,
-        locations="district", featureidkey="properties.district",
-        projection="mercator", range_color=[0, 6500])
-    map.update_geos(fitbounds="locations", visible=False)
-    map.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
-    map.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font_color="#2cfec1")
-    return map 
-
 
 
 ##line chart
@@ -322,7 +302,6 @@ def update_output_div(cultivo, anio, cluster):
         ]
       }
    
-    myreq
     headers =  {"Content-Type":"application/json", "accept": "application/json"}
 
     # POST call to the API
@@ -333,7 +312,7 @@ def update_output_div(cultivo, anio, cluster):
     # Pick result to return from json format
     result = data
     
-    return result 
+    return result
 
 
 if __name__ == '__main__':
