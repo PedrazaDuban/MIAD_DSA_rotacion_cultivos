@@ -24,10 +24,9 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
 
-IP_API= '44.204.231.223'
 # PREDICTION API URL 
 api_url = os.getenv('API_URL')
-api_url = "http://{IP_API}/api/v1/predict".format(api_url)
+api_url = "http://44.204.231.223/api/v1/predict".format(api_url)
 
 
 with open('../data/cultivos.csv', 'r', encoding='utf-8') as file:
