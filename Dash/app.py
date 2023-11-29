@@ -26,7 +26,7 @@ server = app.server
 
 # PREDICTION API URL 
 api_url = os.getenv('API_URL')
-api_url = "http://44.204.231.223/api/v1/predict".format(api_url)
+api_url = "http://44.204.231.223:8001/api/v1/predict".format(api_url)
 
 
 with open('../data/cultivos.csv', 'r', encoding='utf-8') as file:
@@ -355,46 +355,12 @@ def update_line_chart(grupo_cultivo, año, municipio, departamento, cultivo,valo
 
 
 
-# Method to update prediction
+# Método para actualizar la predicción
 @app.callback(
     Output(component_id='resultado', component_property='children'),
-    [[Input(component_id='enviar-consulta', component_property='n_clicks')],
-     Input(component_id='dropdown-cultivo', component_property='value'), 
-     Input(component_id='dropdown-año', component_property='value'), 
-     Input(component_id='dropdown-numero-cluster', component_property='value')]
-)
-def update_output_div(cultivo, anio, cluster):
-    print(f"cultivo: {cultivo}, anio: {anio}, cluster: {cluster}")
-    myreq = {
-        "inputs": [
-            {
-            "NOMBRE_CULTIVO": str(cultivo),
-            "ANIO": anio,
-            "NUM_CLUSTERS": cluster
-            }
-        ]
-      }
-    print(f"Contenido de myreq: {myreq}")
-   
-    headers =  {"Content-Type":"application/json", "accept": "application/json"}
-    #print(f"Contenido de myreq: {headers}")
-    # POST call to the API
-    response = requests.post(api_url, data=json.dumps(myreq), headers=headers)
-    data = response.json()
-    logger.info("Response: {}".format(data))
-    # Imprimir la respuesta completa del API
-    print(f"Respuesta completa del API: {data}")
-
-    # Pick result to return from json format
-    result = data["predictions"][0]
-    
-    return result
-
-@app.callback(
-    Output(component_id='resultado', component_property='children'),
-    [[Input(component_id='enviar-consulta', component_property='n_clicks')],
-     Input(component_id='dropdown-cultivo', component_property='value'), 
-     Input(component_id='dropdown-año', component_property='value'), 
+    [Input(component_id='enviar-consulta', component_property='n_clicks'),
+    Input(component_id='dropdown-cultivo', component_property='value'),
+     Input(component_id='dropdown-año', component_property='value'),
      Input(component_id='dropdown-numero-cluster', component_property='value')]
 )
 def update_output_div(n_clicks, cultivo, anio, cluster):
@@ -415,37 +381,6 @@ def update_output_div(n_clicks, cultivo, anio, cluster):
         return result
     else:
         return ""
-
-
-@app.callback(
-    dash.dependencies.Output('mapa', 'figure'),
-    [dash.dependencies.Input('mapa', 'relayoutData')]
-)
-def update_map(relayoutData):
-    # Aquí puedes agregar la lógica para actualizar el mapa dinámicamente
-    # por ejemplo, puedes filtrar los datos según el área seleccionada en el mapa
-
-    # Supongo que 'CODIGO_MUNICIPIO' está en tu DataFrame
-    # Reemplaza esto con la columna correcta en tu DataFrame
-    # y cualquier lógica de filtrado adicional que necesites
-
-    filtered_data = mapa_data
-
-    # Crea el mapa con Plotly Express
-    fig = px.choropleth_mapbox(
-        filtered_data,
-        geojson=municipios_mapa,  # Reemplaza esto con tu archivo GeoJSON
-        featureidkey='properties.CODIGO_MUNICIPIO',  # Reemplaza con tu clave
-        locations='CODIGO_MUNICIPIO',  # Reemplaza con tu columna de ubicaciones
-        color='tu_columna_de_color',  # Reemplaza con la columna que deseas mapear
-        mapbox_style="carto-positron",
-        center={"lat": 4.5709, "lon": -74.2973},  # Ajusta según tus necesidades
-        zoom=5,
-        opacity=0.5,
-    )
-
-    # Actualiza la figura del mapa
-    return fig
 
 
 
