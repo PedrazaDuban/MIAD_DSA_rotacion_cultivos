@@ -37,6 +37,9 @@ municipios_mapa=gpd.read_file('../data/MunicipiosVeredas19MB.json')
 with open('../data/mapa_clusters.csv', 'r', encoding='utf-8') as file:
     mapa_data = pd.read_csv('../data/mapa_clusters.csv')
 
+
+  
+
 grupos_cultivos = Inputs['GRUPO_CULTIVO'].unique().tolist()
 años = Inputs['ANIO'].unique().tolist()
 departamentos = Inputs['NOMBRE_DEPARTAMENTO'].unique().tolist()
@@ -123,13 +126,17 @@ html.H6("Cultivo"),
         value=cultivos[0],
         searchable=True  # Habilitar la opción de búsqueda
     ),
+html.Br(),  # Agregar un espacio vertical
+html.Br(),  # Agregar un espacio vertical
 
-html.Button("Enviar Consulta",
-    id="enviar-button",
-    n_clicks=1,
-    style={'color': '#2cfec1', 'textAlign': 'center','fontSize': '18px'}
-    ),
-     
+
+html.Div([
+        html.Button("Enviar Consulta",
+                    id="enviar-consulta",
+                    n_clicks=0,
+                    style={'color': '#2cfec1', 'textAlign': 'center', 'fontSize': '18px'}),
+        html.Div(id='output-message')
+    ], style={'textAlign': 'center'}) 
 
 ], className="left-container"),  # Contenedor izquierdo
 
@@ -181,7 +188,8 @@ html.Div([
 html.Div([
     html.H4('Grupo de Cultivos con Municipicos Similares', className="title-visualizacion"),
     html.Img(src=f"data:image/png;base64,{encoded_mapa}"),
-     # Map plot
+# Map plot
+   # dcc.Graph(id='mapa'),
   
 ],className="mapa-container"),
 # Contenedor de la tabla
@@ -242,6 +250,14 @@ def update_municipios(grupos_cultivos):
     return options
 
 ##LLammado boton 
+@app.callback(
+    Output('output-message', 'children'),
+    [Input('enviar-consulta', 'n_clicks')]
+)
+def boton(n_clicks):
+    message = f"Se hizo clic en el botón {n_clicks} veces."
+    return message
+
 
 
 #Llamado a la base de card 1
@@ -342,7 +358,8 @@ def update_line_chart(grupo_cultivo, año, municipio, departamento, cultivo,valo
 # Method to update prediction
 @app.callback(
     Output(component_id='resultado', component_property='children'),
-    [Input(component_id='dropdown-cultivo', component_property='value'), 
+    [[Input(component_id='enviar-consulta', component_property='n_clicks')],
+     Input(component_id='dropdown-cultivo', component_property='value'), 
      Input(component_id='dropdown-año', component_property='value'), 
      Input(component_id='dropdown-numero-cluster', component_property='value')]
 )
@@ -372,6 +389,66 @@ def update_output_div(cultivo, anio, cluster):
     result = data["predictions"][0]
     
     return result
+
+@app.callback(
+    Output(component_id='resultado', component_property='children'),
+    [[Input(component_id='enviar-consulta', component_property='n_clicks')],
+     Input(component_id='dropdown-cultivo', component_property='value'), 
+     Input(component_id='dropdown-año', component_property='value'), 
+     Input(component_id='dropdown-numero-cluster', component_property='value')]
+)
+def update_output_div(n_clicks, cultivo, anio, cluster):
+    if n_clicks > 0:
+        myreq = {
+            "inputs": [
+                {
+                    "NOMBRE_CULTIVO": str(cultivo),
+                    "ANIO": anio,
+                    "NUM_CLUSTERS": cluster
+                }
+            ]
+        }
+        headers = {"Content-Type": "application/json", "accept": "application/json"}
+        response = requests.post(api_url, data=json.dumps(myreq), headers=headers)
+        data = response.json()
+        result = data["predictions"][0]
+        return result
+    else:
+        return ""
+
+
+@app.callback(
+    dash.dependencies.Output('mapa', 'figure'),
+    [dash.dependencies.Input('mapa', 'relayoutData')]
+)
+def update_map(relayoutData):
+    # Aquí puedes agregar la lógica para actualizar el mapa dinámicamente
+    # por ejemplo, puedes filtrar los datos según el área seleccionada en el mapa
+
+    # Supongo que 'CODIGO_MUNICIPIO' está en tu DataFrame
+    # Reemplaza esto con la columna correcta en tu DataFrame
+    # y cualquier lógica de filtrado adicional que necesites
+
+    filtered_data = mapa_data
+
+    # Crea el mapa con Plotly Express
+    fig = px.choropleth_mapbox(
+        filtered_data,
+        geojson=municipios_mapa,  # Reemplaza esto con tu archivo GeoJSON
+        featureidkey='properties.CODIGO_MUNICIPIO',  # Reemplaza con tu clave
+        locations='CODIGO_MUNICIPIO',  # Reemplaza con tu columna de ubicaciones
+        color='tu_columna_de_color',  # Reemplaza con la columna que deseas mapear
+        mapbox_style="carto-positron",
+        center={"lat": 4.5709, "lon": -74.2973},  # Ajusta según tus necesidades
+        zoom=5,
+        opacity=0.5,
+    )
+
+    # Actualiza la figura del mapa
+    return fig
+
+
+
 
 if __name__ == '__main__':
     #logger.info("Running dash")
