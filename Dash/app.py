@@ -439,5 +439,5 @@ def update_output_div(n_clicks, cultivo, anio, cluster):
 
 
 if __name__ == '__main__':
-    #logger.info("Running dash")
+    logger.info("Running dash")
     app.run_server(debug=True,host= '0.0.0.0', port=8060)
