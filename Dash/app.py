@@ -255,7 +255,7 @@ def update_municipios(grupos_cultivos):
     [Input('enviar-consulta', 'n_clicks')]
 )
 def boton(n_clicks):
-    message = f"Se hizo clic en el botón {n_clicks} veces."
+    message = f"Se han realizado {n_clicks} veces."
     return message
 
 
