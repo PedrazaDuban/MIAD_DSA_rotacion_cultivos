@@ -31,7 +31,8 @@ with open('../data/cultivos.csv', 'r', encoding='utf-8') as file:
     Inputs = pd.read_csv(file)
 
 municipios_mapa=gpd.read_file('../data/MunicipiosVeredas19MB.json')
-
+with open('../data/mapa_clusters.csv', 'r', encoding='utf-8') as file:
+    mapa_data = pd.read_csv('../data/mapa_clusters.csv')
 
 grupos_cultivos = Inputs['GRUPO_CULTIVO'].unique().tolist()
 años = Inputs['ANIO'].unique().tolist()
@@ -48,11 +49,10 @@ Toneladas = Inputs['RENDIMIENTO_TONELADAS_HA']
 NumMunicipios = len(Inputs['NOMBRE_MUNICIPIO'].unique())
 NumMunicipios_formateado = "{:,}".format(NumMunicipios)
 
-
+##mapa
 # Datos de ejemplo Tabla
 
-df = pd.DataFrame(Inputs, columns=['GRUPO_CULTIVO','NOMBRE_CULTIVO','NUM_CLUSTERS', 'RENDIMIENTO_TONELADAS_HA'])
-df_top10 = df.apply(lambda x: x.unique()[:10])
+df = pd.DataFrame(Inputs, columns=['NOMBRE_MUNICIPIO','GRUPO_CULTIVO','NOMBRE_CULTIVO','NUM_CLUSTERS', 'RENDIMIENTO_TONELADAS_HA'])
 
 #########################DASH##########################                                                                                                                
 with open('./img/Logo.png', 'rb') as f:
@@ -159,10 +159,18 @@ html.Div([
     ], className="card"),# Contenedor cards
     # Contenedor de la tabla
     html.Div([
-        html.H4('Tabla de Recomendaciones', className="title-visualizacion"),
-        dash_table.DataTable(df_top10.to_dict('records'), [{"name": i, "id": i} for i in df.columns],
-                             style_cell={'backgroundColor': 'rgba(0,0,0,0)', 'color': '#2cfec1','textAlign': 'center'},
-                             ), 
+        html.H4('Tabla deL TOP 15 de Recomendaciones', className="title-visualizacion"),
+   dcc.Loading(
+            id="loading",
+            type="circle",
+            children=[
+                dash_table.DataTable(
+                    id='recomendaciones-table',
+                    columns=[{"name": i, "id": i} for i in df.columns],
+                    style_cell={'backgroundColor': 'rgba(0,0,0,0)', 'color': '#2cfec1', 'textAlign': 'center'},
+                )
+            ]
+        ),
     ], className="table-container"),  # Contenedor de la tabla
 ], className="cards-container"), # Contenedor de las cards y la tabla
 
@@ -170,6 +178,7 @@ html.Div([
 html.Div([
     html.H4('Grupo de Cultivos con Municipicos Similares', className="title-visualizacion"),
     html.Img(src=f"data:image/png;base64,{encoded_mapa}"),
+    #dcc.Graph(id='mapa-graph'),
  
 ],className="mapa-container"),
 # Contenedor de la tabla
@@ -238,11 +247,64 @@ from dash.exceptions import PreventUpdate
 #Llamado a la base de card 1
 
 #llamado a la base de tabla
+@app.callback(
+    Output('recomendaciones-table', 'data'),
+    [
+        Input('dropdown-departamento', 'value'),
+        Input('dropdown-municipio', 'value'),
+        Input("dropdown-grupo-cultivo", "value")
+    ]
+)
+def update_table(departamento, municipio,grupos_cultivos):
+    # Filtra el DataFrame según los valores seleccionados en los dropdowns
+    filtered_df = Inputs
+    if departamento:
+        filtered_df = filtered_df[filtered_df['NOMBRE_DEPARTAMENTO'] == departamento]
 
+        if municipio:
+            filtered_df = filtered_df[filtered_df['NOMBRE_MUNICIPIO'] == municipio]
+
+            if grupos_cultivos:
+                filtered_df = filtered_df[filtered_df['GRUPO_CULTIVO'] == grupos_cultivos]
+
+        df_top10_sorted = filtered_df.sort_values(by='RENDIMIENTO_TONELADAS_HA', ascending=False)
+        df_top10_sorted_head10 = df_top10_sorted.head(15)
+    return df_top10_sorted_head10.to_dict('records')
 
 ##mapa #https://plotly.com/python/maps/
 
+# Callback para actualizar el mapa según los filtros
+@app.callback(
+    Output('mapa-graph', 'figure'),
+    [Input('dropdown-departamento', 'value'),
+     Input('dropdown-municipio', 'value')]
+)
+def update_map(departamento, municipio):
+    # Filtrar el GeoDataFrame según los valores seleccionados en los dropdowns
+    filtered_mapa =  mapa_data
+    
+    if departamento:
+        filtered_mapa = filtered_mapa[filtered_mapa['NOMBRE_DEPARTAMENTO'] == departamento]
 
+    if municipio:
+        filtered_mapa = filtered_mapa[filtered_mapa['NOMBRE_MUNICIPIO'] == municipio]
+
+    # Crear el mapa con plotly.express
+    fig = px.choropleth_mapbox(
+        filtered_mapa,
+        geojson=filtered_mapa.geometry,
+        locations=filtered_mapa.index,
+        color='CODIGO_MUNICIPIO',
+        color_continuous_scale='Set1',
+        mapbox_style='carto-positron',
+        center={'lat': filtered_mapa.centroid.y.mean(), 'lon': filtered_mapa.centroid.x.mean()},
+        zoom=5
+    )
+
+    # Actualizar el diseño del mapa
+    fig.update_layout(mapbox_style="carto-positron")
+    
+    return fig
 
 ##line chart
 @app.callback(
