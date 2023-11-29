@@ -17,6 +17,9 @@ from loguru import logger
 import matplotlib as plt
 import geopandas as gpd
 import matplotlib.pyplot as plt
+import folium
+from folium import Choropleth
+from folium.plugins import HeatMap
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
@@ -26,7 +29,7 @@ server = app.server
 
 # PREDICTION API URL 
 api_url = os.getenv('API_URL')
-api_url = "http://44.204.231.223:8001/api/v1/predict".format(api_url)
+api_url = "http://54.205.214.20:8001/api/v1/predict".format(api_url)
 
 
 with open('../data/cultivos.csv', 'r', encoding='utf-8') as file:
@@ -38,7 +41,16 @@ with open('../data/mapa_clusters.csv', 'r', encoding='utf-8') as file:
     mapa_data = pd.read_csv('../data/mapa_clusters.csv')
 
 
-  
+#mapa_fig = px.choropleth(
+#    municipios_mapa,
+#    geojson=municipios_mapa['geometry'],  # Sustituye 'geojson_data' por el GeoJSON de tus municipios
+#    locations='MPIO_CCNCT',
+#    color='MPIO_CCNCT',
+#    color_continuous_scale='Viridis',
+#    scope='south america',  
+#    labels={'MPIO_CCNCT': 'Etiqueta de la leyenda'},
+#)
+
 
 grupos_cultivos = Inputs['GRUPO_CULTIVO'].unique().tolist()
 años = Inputs['ANIO'].unique().tolist()
@@ -189,10 +201,11 @@ html.Div([
     html.H4('Grupo de Cultivos con Municipicos Similares', className="title-visualizacion"),
     html.Img(src=f"data:image/png;base64,{encoded_mapa}"),
 # Map plot
-   # dcc.Graph(id='mapa'),
+   #dcc.Graph(figure=mapa_fig,style={'width':1400, 'height': 700,'margin': 'auto', 'display': 'block'}),
   
 ],className="mapa-container"),
 # Contenedor de la tabla
+
 
 html.Div([
     html.H4('Predicción del Rendimiento en Toneladas por Hectarea', className="title-visualizacion"),
@@ -353,6 +366,47 @@ def update_line_chart(grupo_cultivo, año, municipio, departamento, cultivo,valo
 
     return fig
 
+#def update_line_chart(grupo_cultivo, año, municipio, departamento, cultivo,valores_unicos):
+#    # Filtra los datos basados en las selecciones
+#    # Filtra los datos basados en las 
+#    filtered_df = Inputs
+#    if departamento:
+#        filtered_df = filtered_df[filtered_df['NOMBRE_DEPARTAMENTO'] == departamento]
+##
+#        if municipio:
+#            filtered_df = filtered_df[filtered_df['NOMBRE_MUNICIPIO'] == municipio]
+##
+#            if grupos_cultivos:
+#                filtered_df = filtered_df[filtered_df['GRUPO_CULTIVO'] == grupos_cultivos]
+##
+#        df_top10_sorted = filtered_df.sort_values(by='RENDIMIENTO_TONELADAS_HA', ascending=False)
+#        df_top10_sorted_head10 = df_top10_sorted.head(15)
+#
+#        filtered_data = df_top10_sorted_head10[
+#            (Inputs['ANIO'] >= año)&    
+#            (Inputs['RENDIMIENTO_TONELADAS_HA'] == Toneladas)
+#        
+#    ]
+#
+#    # Asigna los valores de x y y basados en los datos filtrados
+#    x_values = filtered_data['ANIO'].tolist()
+#    y_values = filtered_data['RENDIMIENTO_TONELADAS_HA'].tolist()
+#    #x_values = filtered_data['FECHA']  # Reemplaza 'FECHA' con tu columna de fechas
+#    #y_values = filtered_data['RENDIMIENTO_TONELADAS_HA']  # Reemplaza con tus rendimientos
+#
+#    fig = go.Figure(data=go.Scatter(x=x_values, y=y_values, mode='lines', marker_color='#2cfec1'))
+#    #fig = px.line(data2, x='local_timestamp', y="Demanda total [MW]", markers=True, labels={"local_timestamp": "Fecha"})
+#    fig.update_layout(paper_bgcolor='rgba(0,0,0,0)', 
+#                      plot_bgcolor='rgba(0,0,0,0)', 
+#                      font_color="#2cfec1",
+#                      font_size=25,
+#                      xaxis_title="Fecha",
+#                      yaxis_title="Predición de Cultivo")
+#    fig.update_xaxes(showgrid=True, gridwidth=0.25, gridcolor='#7C7C7C')
+#    fig.update_yaxes(showgrid=True, gridwidth=0.25, gridcolor='#7C7C7C')
+#    #fig.update_traces(line_color='#2cfec1')
+#
+#    return fig
 
 
 # Método para actualizar la predicción
