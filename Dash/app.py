@@ -1,6 +1,6 @@
 import dash
 from dash import dcc, html,dash_table
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
 import plotly.graph_objs as go
 import numpy as np
 import pandas as pd
@@ -358,10 +358,10 @@ def update_line_chart(grupo_cultivo, año, municipio, departamento, cultivo,valo
 # Método para actualizar la predicción
 @app.callback(
     Output(component_id='resultado', component_property='children'),
-    [Input(component_id='enviar-consulta', component_property='n_clicks'),
-    Input(component_id='dropdown-cultivo', component_property='value'),
-     Input(component_id='dropdown-año', component_property='value'),
-     Input(component_id='dropdown-numero-cluster', component_property='value')]
+    [Input(component_id='enviar-consulta', component_property='n_clicks')],
+    [State(component_id='dropdown-cultivo', component_property='value'),
+     State(component_id='dropdown-año', component_property='value'),
+     State(component_id='dropdown-numero-cluster', component_property='value')]
 )
 def update_output_div(n_clicks, cultivo, anio, cluster):
     if n_clicks > 0:
@@ -381,7 +381,6 @@ def update_output_div(n_clicks, cultivo, anio, cluster):
         return result
     else:
         return ""
-
 
 
 
