@@ -181,7 +181,7 @@ html.Div([
     ], className="card"),# Contenedor cards
     # Contenedor de la tabla
     html.Div([
-        html.H4('Tabla deL TOP 15 de Recomendaciones', className="title-visualizacion"),
+        html.H4('Tabla de TOP 15 de Recomendaciones', className="title-visualizacion"),
         dcc.Loading(
                     id="loading",
                     type="circle",
